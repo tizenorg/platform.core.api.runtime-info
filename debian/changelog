@@ -1,3 +1,11 @@
+capi-system-runtime-info (0.0.1-3) unstable; urgency=low
+
+  * Added version numbering
+  * Git: api/runtime-info
+  * Tag: capi-system-runtime-info_0.0.1-3
+
+ -- Junghyuk Park <junghyuk.park@samsung.com>  Wed, 15 Feb 2012 10:51:38 +0900
+
 capi-system-runtime-info (0.0.1-2) unstable; urgency=low
 
   * Initial release.
