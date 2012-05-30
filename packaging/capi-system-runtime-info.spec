@@ -5,6 +5,7 @@ Release:    4
 Group:      TO_BE/FILLED_IN
 License:    TO BE FILLED IN
 Source0:    %{name}-%{version}.tar.gz
+Source1001: packaging/capi-system-runtime-info.manifest 
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(vconf)
@@ -30,6 +31,7 @@ Requires:  pkgconfig(capi-base-common)
 
 
 %build
+cp %{SOURCE1001} .
 MAJORVER=`echo %{version} | awk 'BEGIN {FS="."}{print $1}'`  
 cmake . -DCMAKE_INSTALL_PREFIX=/usr -DFULLVER=%{version} -DMAJORVER=${MAJORVER} 
 
@@ -46,9 +48,11 @@ rm -rf %{buildroot}
 
 
 %files
+%manifest capi-system-runtime-info.manifest
 %{_libdir}/lib*.so.*
 
 %files devel
+%manifest capi-system-runtime-info.manifest
 %{_includedir}/system/*.h
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/lib*.so
