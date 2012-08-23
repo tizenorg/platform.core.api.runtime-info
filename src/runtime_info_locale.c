@@ -63,12 +63,12 @@ int runtime_info_24hour_format_get_value(runtime_info_value_h value)
 
 int runtime_info_24hour_format_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_24HOUR_FORMAT, RUNTIME_INFO_KEY_24HOUR_CLOCK_FORMAT_ENABLED);
+	return runtime_info_vconf_set_event_cb(VCONF_24HOUR_FORMAT, RUNTIME_INFO_KEY_24HOUR_CLOCK_FORMAT_ENABLED, 0);
 }
 
 void runtime_info_24hour_format_unset_event_cb()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_24HOUR_FORMAT);
+	runtime_info_vconf_unset_event_cb(VCONF_24HOUR_FORMAT, 0);
 }
 
 int runtime_info_first_day_of_week_get_value(runtime_info_value_h value)
@@ -119,12 +119,12 @@ int runtime_info_first_day_of_week_get_value(runtime_info_value_h value)
 
 int runtime_info_first_day_of_week_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_FIRST_DAY_OF_WEEK, RUNTIME_INFO_KEY_FIRST_DAY_OF_WEEK);
+	return runtime_info_vconf_set_event_cb(VCONF_FIRST_DAY_OF_WEEK, RUNTIME_INFO_KEY_FIRST_DAY_OF_WEEK, 0);
 }
 
 void runtime_info_first_day_of_week_unset_event_cb()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_FIRST_DAY_OF_WEEK);
+	runtime_info_vconf_unset_event_cb(VCONF_FIRST_DAY_OF_WEEK, 0);
 }
 
 int runtime_info_language_get_value(runtime_info_value_h value)
@@ -143,12 +143,12 @@ int runtime_info_language_get_value(runtime_info_value_h value)
 
 int runtime_info_language_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_LANGUAGE, RUNTIME_INFO_KEY_LANGUAGE);
+	return runtime_info_vconf_set_event_cb(VCONF_LANGUAGE, RUNTIME_INFO_KEY_LANGUAGE, 0);
 }
 
 void runtime_info_language_unset_event_cb()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_LANGUAGE);
+	runtime_info_vconf_unset_event_cb(VCONF_LANGUAGE, 0);
 }
 
 int runtime_info_region_get_value(runtime_info_value_h value)
@@ -167,11 +167,11 @@ int runtime_info_region_get_value(runtime_info_value_h value)
 
 int runtime_info_region_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_REGION, RUNTIME_INFO_KEY_REGION);
+	return runtime_info_vconf_set_event_cb(VCONF_REGION, RUNTIME_INFO_KEY_REGION, 0);
 }
 
 void runtime_info_region_unset_event_cb ()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_REGION);
+	runtime_info_vconf_unset_event_cb(VCONF_REGION, 0);
 }
 

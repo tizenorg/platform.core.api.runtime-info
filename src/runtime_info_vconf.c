@@ -62,7 +62,9 @@ int runtime_info_vconf_get_value_string(const char *vconf_key, char **value)
 	}
 }
 
-static void runtime_info_vconf_event_broker(keynode_t *node, void *event_data)
+typedef void (*runtime_info_vconf_event_cb)(keynode_t *node, void *event_data);
+
+static void runtime_info_vconf_event_cb0(keynode_t *node, void *event_data)
 {
 	if (node != NULL)
 	{
@@ -70,9 +72,74 @@ static void runtime_info_vconf_event_broker(keynode_t *node, void *event_data)
 	}		
 }
 
-int runtime_info_vconf_set_event_cb (const char *vconf_key, runtime_info_key_e runtime_info_key)
+static void runtime_info_vconf_event_cb1(keynode_t *node, void *event_data)
 {
-	if (vconf_notify_key_changed(vconf_key, runtime_info_vconf_event_broker, (void*)runtime_info_key))
+	if (node != NULL)
+	{
+		runtime_info_updated((runtime_info_key_e)event_data);
+	}		
+}
+
+static void runtime_info_vconf_event_cb2(keynode_t *node, void *event_data)
+{
+	if (node != NULL)
+	{
+		runtime_info_updated((runtime_info_key_e)event_data);
+	}		
+}
+
+static void runtime_info_vconf_event_cb3(keynode_t *node, void *event_data)
+{
+	if (node != NULL)
+	{
+		runtime_info_updated((runtime_info_key_e)event_data);
+	}		
+}
+
+static void runtime_info_vconf_event_cb4(keynode_t *node, void *event_data)
+{
+	if (node != NULL)
+	{
+		runtime_info_updated((runtime_info_key_e)event_data);
+	}		
+}
+
+static runtime_info_vconf_event_cb runtime_info_vconf_get_event_cb_slot(int slot)
+{
+	switch (slot)
+	{
+	case 0:
+		return runtime_info_vconf_event_cb0;
+
+	case 1:
+		return runtime_info_vconf_event_cb1;
+
+	case 2:
+		return runtime_info_vconf_event_cb2;
+
+	case 3:
+		return runtime_info_vconf_event_cb3;
+
+	case 4:
+		return runtime_info_vconf_event_cb4;
+
+	default:
+		return NULL;
+	}
+}
+
+int runtime_info_vconf_set_event_cb (const char *vconf_key, runtime_info_key_e runtime_info_key, int slot)
+{
+	runtime_info_vconf_event_cb vconf_event_cb;
+
+	vconf_event_cb = runtime_info_vconf_get_event_cb_slot(slot);
+
+	if (vconf_event_cb == NULL)
+	{
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	if (vconf_notify_key_changed(vconf_key, vconf_event_cb, (void*)runtime_info_key))
 	{
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 	}
@@ -80,8 +147,15 @@ int runtime_info_vconf_set_event_cb (const char *vconf_key, runtime_info_key_e r
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-void runtime_info_vconf_unset_event_cb (const char *vconf_key)
+void runtime_info_vconf_unset_event_cb (const char *vconf_key, int slot)
 {
-	vconf_ignore_key_changed(vconf_key, runtime_info_vconf_event_broker);
+	runtime_info_vconf_event_cb vconf_event_cb;
+
+	vconf_event_cb = runtime_info_vconf_get_event_cb_slot(slot);
+
+	if (vconf_event_cb != NULL)
+	{
+		vconf_ignore_key_changed(vconf_key, vconf_event_cb);
+	}
 }
 

@@ -254,6 +254,65 @@ runtime_info_item_s runtime_info_item_table[] = {
 	NULL
 },
 
+
+{
+	RUNTIME_INFO_KEY_TV_OUT_CONNECTED, /**<Indicates whether TV out is connected. */
+	RUNTIME_INFO_DATA_TYPE_BOOL,
+	runtime_info_tvout_connected_get_value,
+	runtime_info_tvout_connected_set_event_cb,
+	runtime_info_tvout_connected_unset_event_cb,
+	NULL
+},
+
+
+{
+	RUNTIME_INFO_KEY_AUDIO_JACK_STATUS, /**<Indicates the current status of audio jack. */
+	RUNTIME_INFO_DATA_TYPE_INT,
+	runtime_info_audio_jack_status_get_value,
+	runtime_info_audio_jack_status_set_event_cb,
+	runtime_info_audio_jack_status_unset_event_cb,
+	NULL
+},
+
+
+{
+	RUNTIME_INFO_KEY_SLIDING_KEYBOARD_OPENED, /**<Indicates whether sliding keyboard is opened. */
+	RUNTIME_INFO_DATA_TYPE_BOOL,
+	runtime_info_sliding_keyboard_opened_get_value,
+	runtime_info_sliding_keyboard_opened_set_event_cb,
+	runtime_info_sliding_keyboard_opened_unset_event_cb,
+	NULL
+},
+
+
+{
+	RUNTIME_INFO_KEY_USB_CONNECTED, /**<Indicates whether usb is connected. */
+	RUNTIME_INFO_DATA_TYPE_BOOL,
+	runtime_info_usb_connected_get_value,
+	runtime_info_usb_connected_set_event_cb,
+	runtime_info_usb_connected_unset_event_cb,
+	NULL
+},
+
+{
+	RUNTIME_INFO_KEY_CHARGER_CONNECTED, /**<Indicates whether charger is connected. */
+	RUNTIME_INFO_DATA_TYPE_BOOL,
+	runtime_info_charger_connected_get_value,
+	runtime_info_charger_connected_set_event_cb,
+	runtime_info_charger_connected_unset_event_cb,
+	NULL
+},
+
+{
+	RUNTIME_INFO_KEY_VIBRATION_LEVEL_HAPTIC_FEEDBACK, /**<Indicates the current vibration level of haptic feedback. */
+	RUNTIME_INFO_DATA_TYPE_INT,
+	runtime_info_vibration_level_haptic_feedback_get_value,
+	runtime_info_vibration_level_haptic_feedback_set_event_cb,
+	runtime_info_vibration_level_haptic_feedback_unset_event_cb,
+	NULL
+},
+
+
 {
 	RUNTIME_INFO_MAX, RUNTIME_INFO_DATA_TYPE_INT, NULL, NULL, NULL, NULL
 }
@@ -513,6 +572,8 @@ void runtime_info_updated(runtime_info_key_e key)
 		return;
 	}
 
+	memset(&current_value, 0, sizeof(runtime_info_value_u));
+
 	runtime_info_get_value(key, runtime_info_item->data_type, &current_value);
 
 	if (runtime_info_item->event_subscription->most_recent_value != NULL)
@@ -524,7 +585,7 @@ void runtime_info_updated(runtime_info_key_e key)
 	}
 	else
 	{
-		runtime_info_item->event_subscription->most_recent_value = malloc(sizeof(runtime_info_value_u));
+		runtime_info_item->event_subscription->most_recent_value = calloc(1, sizeof(runtime_info_value_u));
 
 		if (runtime_info_item->event_subscription->most_recent_value == NULL)
 		{

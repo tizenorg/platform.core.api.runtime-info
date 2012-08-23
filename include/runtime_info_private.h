@@ -51,8 +51,9 @@ int runtime_info_vconf_get_value_int(const char *vconf_key, int *value);
 int runtime_info_vconf_get_value_bool(const char *vconf_key, bool *value);
 int runtime_info_vconf_get_value_double(const char *vconf_key, double *value);
 int runtime_info_vconf_get_value_string(const char *vconf_key, char **value);
-int runtime_info_vconf_set_event_cb(const char *vconf_key, runtime_info_key_e runtime_info_key);
-void runtime_info_vconf_unset_event_cb(const char *vconf_key);
+
+int runtime_info_vconf_set_event_cb(const char *vconf_key, runtime_info_key_e runtime_info_key, int slot);
+void runtime_info_vconf_unset_event_cb(const char *vconf_key, int slot);
 
 int runtime_info_flightmode_get_value(runtime_info_value_h);
 int runtime_info_flightmode_set_event_cb(void);
@@ -141,6 +142,30 @@ void runtime_info_gps_status_unset_event_cb(void);
 int runtime_info_battery_charging_get_value(runtime_info_value_h);
 int runtime_info_battery_charging_set_event_cb(void);
 void runtime_info_battery_charging_unset_event_cb(void);
+
+int runtime_info_tvout_connected_get_value(runtime_info_value_h value);
+int runtime_info_tvout_connected_set_event_cb();
+void runtime_info_tvout_connected_unset_event_cb();
+
+int runtime_info_audio_jack_status_get_value (runtime_info_value_h value);
+int runtime_info_audio_jack_status_set_event_cb ();
+void runtime_info_audio_jack_status_unset_event_cb();
+
+int runtime_info_sliding_keyboard_opened_get_value(runtime_info_value_h value);
+int runtime_info_sliding_keyboard_opened_set_event_cb();
+void runtime_info_sliding_keyboard_opened_unset_event_cb();
+
+int runtime_info_usb_connected_get_value(runtime_info_value_h value);
+int runtime_info_usb_connected_set_event_cb();
+void runtime_info_usb_connected_unset_event_cb();
+
+int runtime_info_charger_connected_get_value(runtime_info_value_h value);
+int runtime_info_charger_connected_set_event_cb();
+void runtime_info_charger_connected_unset_event_cb();
+
+int runtime_info_vibration_level_haptic_feedback_get_value(runtime_info_value_h value);
+int runtime_info_vibration_level_haptic_feedback_set_event_cb();
+void runtime_info_vibration_level_haptic_feedback_unset_event_cb();
 
 #ifdef __cplusplus
 }

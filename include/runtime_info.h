@@ -67,6 +67,12 @@ typedef enum
 	RUNTIME_INFO_KEY_AUDIO_JACK_CONNECTED, /**<Indicates whether audio jack is connected. */
 	RUNTIME_INFO_KEY_GPS_STATUS, /**<Indicates the current status of GPS. */
 	RUNTIME_INFO_KEY_BATTERY_IS_CHARGING, /**<Indicates the battery is currently charging. */
+	RUNTIME_INFO_KEY_TV_OUT_CONNECTED, /**<Indicates whether TV out is connected. */
+	RUNTIME_INFO_KEY_AUDIO_JACK_STATUS, /**<Indicates the current status of audio jack. */
+	RUNTIME_INFO_KEY_SLIDING_KEYBOARD_OPENED, /**<Indicates whether sliding keyboard is opened. */
+	RUNTIME_INFO_KEY_USB_CONNECTED, /**<Indicates whether USB is connected. */
+	RUNTIME_INFO_KEY_CHARGER_CONNECTED, /**<Indicates whether charger is connected. */
+	RUNTIME_INFO_KEY_VIBRATION_LEVEL_HAPTIC_FEEDBACK, /**<Indicates the current vibration level of haptic feedback. */
 } runtime_info_key_e;
 
 
@@ -103,6 +109,17 @@ typedef enum
 	RUNTIME_INFO_FIRST_DAY_OF_WEEK_FRIDAY, /**< Friday */
 	RUNTIME_INFO_FIRST_DAY_OF_WEEK_SATURDAY, /**< Saturday */
 } runtime_info_first_day_of_week_e;
+
+/**
+ * @brief Enumeration of audio jack status
+ */
+typedef enum
+{
+	RUNTIME_INFO_AUDIO_JACK_STATUS_UNCONNECTED, /**< audio jack is not connected */
+	RUNTIME_INFO_AUDIO_JACK_STATUS_CONNECTED_3WIRE, /**< 3-conductor wire is connected. */
+	RUNTIME_INFO_AUDIO_JACK_STATUS_CONNECTED_4WIRE, /**< 4-conductor wire is connected. */
+} runtime_info_audio_jack_status_e;
+
 
 /**
  * @brief   Called when the runtime information changes

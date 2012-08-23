@@ -37,7 +37,7 @@ static const char *VCONF_BT_HOTSPOT_ENABLED = VCONFKEY_MOBILE_HOTSPOT_MODE;
 static const char *VCONF_USB_HOTSPOT_ENABLED = VCONFKEY_MOBILE_HOTSPOT_MODE;
 static const char *VCONF_PACKET_DATA_ENABLED = VCONFKEY_3G_ENABLE;
 static const char *VCONF_DATA_ROAMING_ENABLED = "db/setting/data_roaming";
-static const char *VCONF_GPS_STATUS = VCONFKEY_GPS_STATE;
+static const char *VCONF_GPS_STATUS = VCONFKEY_LOCATION_GPS_STATE;
 
 int runtime_info_wifi_status_get_value(runtime_info_value_h value)
 {
@@ -72,12 +72,12 @@ int runtime_info_wifi_status_get_value(runtime_info_value_h value)
 
 int runtime_info_wifi_status_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_WIFI_STATUS, RUNTIME_INFO_KEY_WIFI_STATUS);
+	return runtime_info_vconf_set_event_cb(VCONF_WIFI_STATUS, RUNTIME_INFO_KEY_WIFI_STATUS, 0);
 }
 
 void runtime_info_wifi_status_unset_event_cb ()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_WIFI_STATUS);
+	runtime_info_vconf_unset_event_cb(VCONF_WIFI_STATUS, 0);
 }
 
 int runtime_info_bt_enabled_get_value(runtime_info_value_h value)
@@ -110,12 +110,12 @@ int runtime_info_bt_enabled_get_value(runtime_info_value_h value)
 
 int runtime_info_bt_enabled_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_BT_ENABLED, RUNTIME_INFO_KEY_BLUETOOTH_ENABLED);
+	return runtime_info_vconf_set_event_cb(VCONF_BT_ENABLED, RUNTIME_INFO_KEY_BLUETOOTH_ENABLED, 0);
 }
 
 void runtime_info_bt_enabled_unset_event_cb ()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_BT_ENABLED);
+	runtime_info_vconf_unset_event_cb(VCONF_BT_ENABLED, 0);
 }
 
 
@@ -135,12 +135,12 @@ int runtime_info_wifi_hotspot_get_value(runtime_info_value_h value)
 
 int runtime_info_wifi_hotspot_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_WIFI_HOTSPOT_ENABLED, RUNTIME_INFO_KEY_WIFI_HOTSPOT_ENABLED);
+	return runtime_info_vconf_set_event_cb(VCONF_WIFI_HOTSPOT_ENABLED, RUNTIME_INFO_KEY_WIFI_HOTSPOT_ENABLED, 0);
 }
 
 void runtime_info_wifi_hotspot_unset_event_cb()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_WIFI_HOTSPOT_ENABLED);
+	runtime_info_vconf_unset_event_cb(VCONF_WIFI_HOTSPOT_ENABLED, 0);
 }
 
 int runtime_info_bt_hotspot_get_value(runtime_info_value_h value)
@@ -159,12 +159,12 @@ int runtime_info_bt_hotspot_get_value(runtime_info_value_h value)
 
 int runtime_info_bt_hotspot_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_BT_HOTSPOT_ENABLED, RUNTIME_INFO_KEY_BLUETOOTH_TETHERING_ENABLED);
+	return runtime_info_vconf_set_event_cb(VCONF_BT_HOTSPOT_ENABLED, RUNTIME_INFO_KEY_BLUETOOTH_TETHERING_ENABLED, 0);
 }
 
 void runtime_info_bt_hotspot_unset_event_cb()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_BT_HOTSPOT_ENABLED);
+	runtime_info_vconf_unset_event_cb(VCONF_BT_HOTSPOT_ENABLED, 0);
 }
 
 int runtime_info_usb_hotspot_get_value(runtime_info_value_h value)
@@ -183,12 +183,12 @@ int runtime_info_usb_hotspot_get_value(runtime_info_value_h value)
 
 int runtime_info_usb_hotspot_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_USB_HOTSPOT_ENABLED, RUNTIME_INFO_KEY_USB_TETHERING_ENABLED);
+	return runtime_info_vconf_set_event_cb(VCONF_USB_HOTSPOT_ENABLED, RUNTIME_INFO_KEY_USB_TETHERING_ENABLED, 0);
 }
 
 void runtime_info_usb_hotspot_unset_event_cb()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_USB_HOTSPOT_ENABLED);
+	runtime_info_vconf_unset_event_cb(VCONF_USB_HOTSPOT_ENABLED, 0);
 }
 
 int runtime_info_packet_data_get_value(runtime_info_value_h value)
@@ -207,12 +207,12 @@ int runtime_info_packet_data_get_value(runtime_info_value_h value)
 
 int runtime_info_packet_data_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_PACKET_DATA_ENABLED, RUNTIME_INFO_KEY_PACKET_DATA_ENABLED);
+	return runtime_info_vconf_set_event_cb(VCONF_PACKET_DATA_ENABLED, RUNTIME_INFO_KEY_PACKET_DATA_ENABLED, 0);
 }
 
 void runtime_info_packet_data_unset_event_cb()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_PACKET_DATA_ENABLED);
+	runtime_info_vconf_unset_event_cb(VCONF_PACKET_DATA_ENABLED, 0);
 }
 
 int runtime_info_data_roaming_get_value(runtime_info_value_h value)
@@ -231,12 +231,12 @@ int runtime_info_data_roaming_get_value(runtime_info_value_h value)
 
 int runtime_info_data_roaming_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_DATA_ROAMING_ENABLED, RUNTIME_INFO_KEY_DATA_ROAMING_ENABLED);
+	return runtime_info_vconf_set_event_cb(VCONF_DATA_ROAMING_ENABLED, RUNTIME_INFO_KEY_DATA_ROAMING_ENABLED, 0);
 }
 
 void runtime_info_data_roaming_unset_event_cb()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_DATA_ROAMING_ENABLED);
+	runtime_info_vconf_unset_event_cb(VCONF_DATA_ROAMING_ENABLED, 0);
 }
 
 int runtime_info_gps_status_get_value(runtime_info_value_h value)
@@ -250,15 +250,15 @@ int runtime_info_gps_status_get_value(runtime_info_value_h value)
 
 	switch (vconf_value)
 	{
-	case VCONFKEY_GPS_OFF:
+	case VCONFKEY_LOCATION_GPS_OFF:
 		value->i = RUNTIME_INFO_GPS_STATUS_DISABLED;
 		break;
 
-	case VCONFKEY_GPS_SEARCHING:
+	case VCONFKEY_LOCATION_GPS_SEARCHING:
 		value->i = RUNTIME_INFO_GPS_STATUS_SEARCHING;
 		break;
 
-	case VCONFKEY_GPS_CONNECTED:
+	case VCONFKEY_LOCATION_GPS_CONNECTED:
 		value->i = RUNTIME_INFO_GPS_STATUS_CONNECTED;
 		break;
 	
@@ -271,11 +271,11 @@ int runtime_info_gps_status_get_value(runtime_info_value_h value)
 
 int runtime_info_gps_status_set_event_cb()
 {
-	return runtime_info_vconf_set_event_cb(VCONF_GPS_STATUS, RUNTIME_INFO_KEY_GPS_STATUS);
+	return runtime_info_vconf_set_event_cb(VCONF_GPS_STATUS, RUNTIME_INFO_KEY_GPS_STATUS, 0);
 }
 
 void runtime_info_gps_status_unset_event_cb()
 {
-	runtime_info_vconf_unset_event_cb(VCONF_GPS_STATUS);
+	runtime_info_vconf_unset_event_cb(VCONF_GPS_STATUS, 0);
 }
 
