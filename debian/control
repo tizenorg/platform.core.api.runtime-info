@@ -1,0 +1,22 @@
+
+Source: capi-system-runtime-info
+Section: libs
+Priority: extra
+Maintainer: Woongsuk Cho <ws77.cho@samsung.com>, junghyuk park <junghyuk.park@samsung.com>, Kyuhun Jung <kyuhun.jung@samsung.com>
+Build-Depends: debhelper (>= 5), dlog-dev, libvconf-dev, capi-base-common-dev
+
+Package: capi-system-runtime-info
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A Runtime Information library in Tizen Native API
+
+Package: capi-system-runtime-info-dev
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, capi-system-runtime-info (= ${Source-Version}), capi-base-common-dev
+Description: A Runtime Information library in Tizen Native API (DEV)
+
+Package: capi-system-runtime-info-dbg
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, capi-system-runtime-info (= ${Source-Version})
+Description: A Runtime Information library in Tizen Native API (DBG)
+
