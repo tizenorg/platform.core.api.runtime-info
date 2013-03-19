@@ -182,15 +182,6 @@ runtime_info_item_s runtime_info_item_table[] = {
 },
 
 {
-	RUNTIME_INFO_KEY_ROTATION_LOCK_ENABLED, /**<Indicates whether rotation lock is enabled. */
-	RUNTIME_INFO_DATA_TYPE_BOOL,
-	runtime_info_rotation_lock_enabled_get_value,
-	NULL,
-	NULL,
-	NULL
-},
-
-{
 	RUNTIME_INFO_KEY_24HOUR_CLOCK_FORMAT_ENABLED, /**<Indicates the current time format. */
 	RUNTIME_INFO_DATA_TYPE_BOOL,
 	runtime_info_24hour_format_get_value,

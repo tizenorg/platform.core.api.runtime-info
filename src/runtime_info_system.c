@@ -55,12 +55,12 @@ int runtime_info_flightmode_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_flightmode_set_event_cb()
+int runtime_info_flightmode_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_FLIGHT_MODE, RUNTIME_INFO_KEY_FLIGHT_MODE_ENABLED, 0);
 }
 
-void runtime_info_flightmode_unset_event_cb()
+void runtime_info_flightmode_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_FLIGHT_MODE, 0);
 }
@@ -86,12 +86,12 @@ int runtime_info_audiojack_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_audiojack_set_event_cb()
+int runtime_info_audiojack_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_AUDIO_JACK, RUNTIME_INFO_KEY_AUDIO_JACK_CONNECTED, 0);
 }
 
-void runtime_info_audiojack_unset_event_cb()
+void runtime_info_audiojack_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_AUDIO_JACK, 0);
 }
@@ -108,12 +108,12 @@ int runtime_info_silent_mode_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_silent_mode_set_event_cb()
+int runtime_info_silent_mode_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_SILENT_MODE, RUNTIME_INFO_KEY_SILENT_MODE_ENABLED, 0);
 }
 
-void runtime_info_silent_mode_unset_event_cb()
+void runtime_info_silent_mode_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_SILENT_MODE, 0);
 }
@@ -130,21 +130,14 @@ int runtime_info_vibration_enabled_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_vibration_enabled_set_event_cb()
+int runtime_info_vibration_enabled_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_VIBRATION_ENABLED, RUNTIME_INFO_KEY_VIBRATION_ENABLED, 0);
 }
 
-void runtime_info_vibration_enabled_unset_event_cb()
+void runtime_info_vibration_enabled_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_VIBRATION_ENABLED, 0);
-}
-
-int runtime_info_rotation_lock_enabled_get_value(runtime_info_value_h value)
-{
-	value->b = false;
-
-	return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
 }
 
 int runtime_info_auto_rotation_enabled_get_value(runtime_info_value_h value)
@@ -159,12 +152,12 @@ int runtime_info_auto_rotation_enabled_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_auto_rotation_enabled_set_event_cb()
+int runtime_info_auto_rotation_enabled_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_ROTATION_LOCK_ENABLED, RUNTIME_INFO_KEY_AUTO_ROTATION_ENABLED, 0);
 }
 
-void runtime_info_auto_rotation_enabled_unset_event_cb()
+void runtime_info_auto_rotation_enabled_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_ROTATION_LOCK_ENABLED, 0);
 }
@@ -181,12 +174,12 @@ int runtime_info_battery_charging_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_battery_charging_set_event_cb()
+int runtime_info_battery_charging_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_BATTERY_CHARGING, RUNTIME_INFO_KEY_BATTERY_IS_CHARGING, 0);
 }
 
-void runtime_info_battery_charging_unset_event_cb()
+void runtime_info_battery_charging_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_BATTERY_CHARGING, 0);
 }
@@ -212,12 +205,12 @@ int runtime_info_tvout_connected_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_tvout_connected_set_event_cb()
+int runtime_info_tvout_connected_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_TVOUT_CONNECTED, RUNTIME_INFO_KEY_TV_OUT_CONNECTED, 1);
 }
 
-void runtime_info_tvout_connected_unset_event_cb()
+void runtime_info_tvout_connected_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_TVOUT_CONNECTED, 1);
 }
@@ -247,12 +240,12 @@ int runtime_info_audio_jack_status_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_audio_jack_status_set_event_cb()
+int runtime_info_audio_jack_status_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_AUDIO_JACK_STATUS, RUNTIME_INFO_KEY_AUDIO_JACK_STATUS, 2);
 }
 
-void runtime_info_audio_jack_status_unset_event_cb()
+void runtime_info_audio_jack_status_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_AUDIO_JACK_STATUS, 2);
 }
@@ -285,12 +278,12 @@ int runtime_info_sliding_keyboard_opened_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_sliding_keyboard_opened_set_event_cb()
+int runtime_info_sliding_keyboard_opened_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_SLIDING_KEYBOARD_STATUS, RUNTIME_INFO_KEY_SLIDING_KEYBOARD_OPENED, 0);
 }
 
-void runtime_info_sliding_keyboard_opened_unset_event_cb()
+void runtime_info_sliding_keyboard_opened_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_SLIDING_KEYBOARD_STATUS, 0);
 }
@@ -323,12 +316,12 @@ int runtime_info_usb_connected_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_usb_connected_set_event_cb()
+int runtime_info_usb_connected_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_USB_CONNECTED, RUNTIME_INFO_KEY_USB_CONNECTED, 0);
 }
 
-void runtime_info_usb_connected_unset_event_cb()
+void runtime_info_usb_connected_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_USB_CONNECTED, 0);
 }
@@ -356,12 +349,12 @@ int runtime_info_charger_connected_get_value(runtime_info_value_h value)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_charger_connected_set_event_cb()
+int runtime_info_charger_connected_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONF_CHARGER_CONNECTED, RUNTIME_INFO_KEY_CHARGER_CONNECTED, 0);
 }
 
-void runtime_info_charger_connected_unset_event_cb()
+void runtime_info_charger_connected_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_CHARGER_CONNECTED, 0);
 }
@@ -379,12 +372,12 @@ int runtime_info_vibration_level_haptic_feedback_get_value(runtime_info_value_h 
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
-int runtime_info_vibration_level_haptic_feedback_set_event_cb()
+int runtime_info_vibration_level_haptic_feedback_set_event_cb(void)
 {
 	return runtime_info_vconf_set_event_cb(VCONFKEY_SETAPPL_TOUCH_FEEDBACK_VIBRATION_LEVEL_INT, RUNTIME_INFO_KEY_VIBRATION_LEVEL_HAPTIC_FEEDBACK, 0);
 }
 
-void runtime_info_vibration_level_haptic_feedback_unset_event_cb()
+void runtime_info_vibration_level_haptic_feedback_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONFKEY_SETAPPL_TOUCH_FEEDBACK_VIBRATION_LEVEL_INT, 0);
 }

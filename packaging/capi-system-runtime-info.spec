@@ -1,6 +1,6 @@
 Name:       capi-system-runtime-info
 Summary:    A Runtime Information library in Tizen Native API
-Version:    0.0.2
+Version:    0.0.3
 Release:    0
 Group:      System/Libraries
 License:    Apache License, Version 2.0

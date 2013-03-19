@@ -57,7 +57,6 @@ typedef enum {
 	RUNTIME_INFO_KEY_DATA_ROAMING_ENABLED, /**<Indicates whether data roaming is enabled. */
 	RUNTIME_INFO_KEY_SILENT_MODE_ENABLED, /**<Indicates whether the device is in silent mode. */
 	RUNTIME_INFO_KEY_VIBRATION_ENABLED, /**<Indicates whether vibration is enabled. */
-	RUNTIME_INFO_KEY_ROTATION_LOCK_ENABLED,
 	RUNTIME_INFO_KEY_24HOUR_CLOCK_FORMAT_ENABLED, /**<Indicates whether 24-hour clock is enabled. */
 	RUNTIME_INFO_KEY_FIRST_DAY_OF_WEEK, /**<Indicates the first day of week. */
 	RUNTIME_INFO_KEY_LANGUAGE, /**<Indicates the current language setting. */
