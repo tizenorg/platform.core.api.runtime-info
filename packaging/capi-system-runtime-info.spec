@@ -30,8 +30,8 @@ Requires:  pkgconfig(capi-base-common)
 
 
 %build
-MAJORVER=`echo %{version} | awk 'BEGIN {FS="."}{print $1}'`
-cmake . -DCMAKE_INSTALL_PREFIX=/usr -DFULLVER=%{version} -DMAJORVER=${MAJORVER}
+MAJORVER=`echo %{version} | awk 'BEGIN {FS="."}{print $1}'`  
+%cmake . -DFULLVER=%{version} -DMAJORVER=${MAJORVER}
 
 
 make %{?jobs:-j%jobs}
