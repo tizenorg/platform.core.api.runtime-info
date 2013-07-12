@@ -5,7 +5,7 @@ Release:    0
 Group:      System/API
 License:    Apache-2.0
 Source0:    %{name}-%{version}.tar.gz
-Source1001: 	capi-system-runtime-info.manifest
+Source1001: %{name}.manifest
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(vconf)
@@ -49,7 +49,6 @@ make %{?jobs:-j%jobs}
 %manifest %{name}.manifest
 %license LICENSE.APLv2
 %{_libdir}/lib*.so.*
-%manifest runtime-info.manifest
 
 %files devel
 %manifest %{name}.manifest
