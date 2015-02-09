@@ -30,8 +30,8 @@
 
 #define LOG_TAG "CAPI_SYSTEM_RUNTIME_INFO"
 
-static const char *VCONF_24HOUR_FORMAT = "db/menu_widget/regionformat_time1224";
-static const char *VCONF_FIRST_DAY_OF_WEEK = "db/setting/weekofday_format";
+static const char *VCONF_24HOUR_FORMAT = VCONFKEY_REGIONFORMAT_TIME1224;
+static const char *VCONF_FIRST_DAY_OF_WEEK = VCONFKEY_SETAPPL_WEEKOFDAY_FORMAT_INT;
 static const char *VCONF_LANGUAGE = VCONFKEY_LANGSET;
 static const char *VCONF_REGION = VCONFKEY_REGIONFORMAT;
 

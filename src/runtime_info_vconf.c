@@ -35,9 +35,9 @@ int runtime_info_vconf_get_value_int(const char *vconf_key, int *value)
 	return vconf_get_int(vconf_key, value);
 }
 
-int runtime_info_vconf_get_value_bool(const char *vconf_key, bool *value)
+int runtime_info_vconf_get_value_bool(const char *vconf_key, int *value)
 {
-	return vconf_get_bool(vconf_key, (int *)value);
+	return vconf_get_bool(vconf_key, value);
 }
 
 int runtime_info_vconf_get_value_double(const char *vconf_key, double *value)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Samsung Electronics Co., Ltd All Rights Reserved
+ * Copyright (c) 2011 - 2015 Samsung Electronics Co., Ltd All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the License);
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,10 @@ extern "C"
 {
 #endif
 
+#ifndef API
+#define API __attribute__ ((visibility("default")))
+#endif
+
 typedef enum {
 	RUNTIME_INFO_DATA_TYPE_STRING,
 	RUNTIME_INFO_DATA_TYPE_INT,
@@ -48,7 +52,7 @@ typedef void (*runtime_info_func_unset_event_cb) (void);
 void runtime_info_updated(runtime_info_key_e key);
 
 int runtime_info_vconf_get_value_int(const char *vconf_key, int *value);
-int runtime_info_vconf_get_value_bool(const char *vconf_key, bool *value);
+int runtime_info_vconf_get_value_bool(const char *vconf_key, int *value);
 int runtime_info_vconf_get_value_double(const char *vconf_key, double *value);
 int runtime_info_vconf_get_value_string(const char *vconf_key, char **value);
 
@@ -94,10 +98,6 @@ void runtime_info_location_agps_unset_event_cb(void);
 int runtime_info_location_network_get_value(runtime_info_value_h);
 int runtime_info_location_network_set_event_cb(void);
 void runtime_info_location_network_unset_event_cb(void);
-
-int runtime_info_location_sensor_get_value(runtime_info_value_h);
-int runtime_info_location_sensor_set_event_cb(void);
-void runtime_info_location_sensor_unset_event_cb(void);
 
 int runtime_info_packet_data_get_value(runtime_info_value_h);
 int runtime_info_packet_data_set_event_cb(void);

@@ -31,16 +31,15 @@
 #define LOG_TAG "CAPI_SYSTEM_RUNTIME_INFO"
 
 static const char *VCONF_LOCATION_SERVICE_ENABLED = VCONFKEY_LOCATION_ENABLED;
-static const char *VCONF_LOCATION_AGPS_ENABLED = "db/location/setting/AgpsEnabled";
+static const char *VCONF_LOCATION_AGPS_ENABLED = VCONFKEY_LOCATION_AGPS_ENABLED;
 static const char *VCONF_LOCATION_NETWORK_ENABLED = VCONFKEY_LOCATION_NETWORK_ENABLED;
-static const char *VCONF_LOCATION_SENSOR_ENABLED = "db/location/setting/SensorEnabled";
 
 int runtime_info_location_service_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
 
 	if (runtime_info_vconf_get_value_int(VCONF_LOCATION_SERVICE_ENABLED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = 0;
 
 	value->b = vconf_value;
 
@@ -62,7 +61,7 @@ int runtime_info_location_agps_get_value(runtime_info_value_h value)
 	int vconf_value;
 
 	if (runtime_info_vconf_get_value_int(VCONF_LOCATION_AGPS_ENABLED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = 0;
 
 	value->b = vconf_value;
 
@@ -84,7 +83,7 @@ int runtime_info_location_network_get_value(runtime_info_value_h value)
 	int vconf_value;
 
 	if (runtime_info_vconf_get_value_int(VCONF_LOCATION_NETWORK_ENABLED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = 0;
 
 	value->b = vconf_value;
 
@@ -100,26 +99,3 @@ void runtime_info_location_network_unset_event_cb()
 {
 	runtime_info_vconf_unset_event_cb(VCONF_LOCATION_NETWORK_ENABLED, 0);
 }
-
-int runtime_info_location_sensor_get_value(runtime_info_value_h value)
-{
-	int vconf_value;
-
-	if (runtime_info_vconf_get_value_int(VCONF_LOCATION_SENSOR_ENABLED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
-
-	value->b = vconf_value;
-
-	return RUNTIME_INFO_ERROR_NONE;
-}
-
-int runtime_info_location_sensor_set_event_cb()
-{
-	return runtime_info_vconf_set_event_cb(VCONF_LOCATION_SENSOR_ENABLED, RUNTIME_INFO_KEY_LOCATION_SENSOR_AIDING_ENABLED, 0);
-}
-
-void runtime_info_location_sensor_unset_event_cb()
-{
-	runtime_info_vconf_unset_event_cb(VCONF_LOCATION_SENSOR_ENABLED, 0);
-}
-
