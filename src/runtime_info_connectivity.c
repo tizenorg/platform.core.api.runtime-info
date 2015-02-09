@@ -36,7 +36,7 @@ static const char *VCONF_WIFI_HOTSPOT_ENABLED = VCONFKEY_MOBILE_HOTSPOT_MODE;
 static const char *VCONF_BT_HOTSPOT_ENABLED = VCONFKEY_MOBILE_HOTSPOT_MODE;
 static const char *VCONF_USB_HOTSPOT_ENABLED = VCONFKEY_MOBILE_HOTSPOT_MODE;
 static const char *VCONF_PACKET_DATA_ENABLED = VCONFKEY_3G_ENABLE;
-static const char *VCONF_DATA_ROAMING_ENABLED = "db/setting/data_roaming";
+static const char *VCONF_DATA_ROAMING_ENABLED = VCONFKEY_SETAPPL_STATE_DATA_ROAMING_BOOL;
 static const char *VCONF_GPS_STATUS = VCONFKEY_LOCATION_GPS_STATE;
 
 int runtime_info_wifi_status_get_value(runtime_info_value_h value)
@@ -44,7 +44,7 @@ int runtime_info_wifi_status_get_value(runtime_info_value_h value)
 	int vconf_value;
 
 	if (runtime_info_vconf_get_value_int(VCONF_WIFI_STATUS, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = VCONFKEY_WIFI_OFF;
 
 	switch (vconf_value) {
 	case VCONFKEY_WIFI_OFF:
@@ -82,7 +82,7 @@ int runtime_info_bt_enabled_get_value(runtime_info_value_h value)
 	int vconf_value;
 
 	if (runtime_info_vconf_get_value_int(VCONF_BT_ENABLED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = VCONFKEY_BT_STATUS_OFF;
 
 	switch (vconf_value) {
 	case VCONFKEY_BT_STATUS_OFF:
@@ -118,7 +118,7 @@ int runtime_info_wifi_hotspot_get_value(runtime_info_value_h value)
 	int vconf_value;
 
 	if (runtime_info_vconf_get_value_int(VCONF_WIFI_HOTSPOT_ENABLED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = VCONFKEY_MOBILE_HOTSPOT_MODE_NONE;
 
 	value->b = (vconf_value&VCONFKEY_MOBILE_HOTSPOT_MODE_WIFI) ? true : false;
 
@@ -140,7 +140,7 @@ int runtime_info_bt_hotspot_get_value(runtime_info_value_h value)
 	int vconf_value;
 
 	if (runtime_info_vconf_get_value_int(VCONF_BT_HOTSPOT_ENABLED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = VCONFKEY_MOBILE_HOTSPOT_MODE_NONE;
 
 	value->b = (vconf_value&VCONFKEY_MOBILE_HOTSPOT_MODE_BT) ? true : false;
 
@@ -162,7 +162,7 @@ int runtime_info_usb_hotspot_get_value(runtime_info_value_h value)
 	int vconf_value;
 
 	if (runtime_info_vconf_get_value_int(VCONF_USB_HOTSPOT_ENABLED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = VCONFKEY_MOBILE_HOTSPOT_MODE_NONE;
 
 	value->b = (vconf_value&VCONFKEY_MOBILE_HOTSPOT_MODE_USB) ? true : false;
 
@@ -181,12 +181,12 @@ void runtime_info_usb_hotspot_unset_event_cb()
 
 int runtime_info_packet_data_get_value(runtime_info_value_h value)
 {
-	bool vconf_value;
+	int vconf_value;
 
 	if (runtime_info_vconf_get_value_bool(VCONF_PACKET_DATA_ENABLED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = 0;
 
-	value->b = vconf_value;
+	value->b = (bool)vconf_value;
 
 	return RUNTIME_INFO_ERROR_NONE;
 }
@@ -203,12 +203,12 @@ void runtime_info_packet_data_unset_event_cb()
 
 int runtime_info_data_roaming_get_value(runtime_info_value_h value)
 {
-	bool vconf_value;
+	int vconf_value;
 
 	if (runtime_info_vconf_get_value_bool(VCONF_DATA_ROAMING_ENABLED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = 0;
 
-	value->b = vconf_value;
+	value->b = (bool)vconf_value;
 
 	return RUNTIME_INFO_ERROR_NONE;
 }
@@ -228,7 +228,7 @@ int runtime_info_gps_status_get_value(runtime_info_value_h value)
 	int vconf_value;
 
 	if (runtime_info_vconf_get_value_int(VCONF_GPS_STATUS, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+		vconf_value = VCONFKEY_LOCATION_GPS_OFF;
 
 	switch (vconf_value) {
 	case VCONFKEY_LOCATION_GPS_OFF:
