@@ -186,6 +186,10 @@ int runtime_info_battery_charging_get_value(runtime_info_value_h value)
 	if (runtime_info_vconf_get_value_int(VCONF_BATTERY_CHARGING, &vconf_value))
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 
+	/* regard not supported as disconnected */
+	if (vconf_value == -ENOTSUP)
+		vconf_value = false;
+
 	value->b = vconf_value;
 
 	return RUNTIME_INFO_ERROR_NONE;
@@ -352,6 +356,8 @@ int runtime_info_charger_connected_get_value(runtime_info_value_h value)
 
 	switch (vconf_value) {
 	case VCONFKEY_SYSMAN_CHARGER_DISCONNECTED:
+	/* regard not supported as disconnected */
+	case -ENOTSUP:
 		value->b = false;
 		break;
 
