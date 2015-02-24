@@ -186,6 +186,9 @@ int runtime_info_battery_charging_get_value(runtime_info_value_h value)
 	if (runtime_info_vconf_get_value_int(VCONF_BATTERY_CHARGING, &vconf_value))
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 
+	if (vconf_value == -ENOTSUP)
+		return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
+
 	value->b = vconf_value;
 
 	return RUNTIME_INFO_ERROR_NONE;
@@ -358,6 +361,9 @@ int runtime_info_charger_connected_get_value(runtime_info_value_h value)
 	case VCONFKEY_SYSMAN_CHARGER_CONNECTED:
 		value->b = true;
 		break;
+
+	case -ENOTSUP:
+		return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
 
 	default:
 		return RUNTIME_INFO_ERROR_IO_ERROR;

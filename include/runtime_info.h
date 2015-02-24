@@ -38,6 +38,7 @@ typedef enum {
 	RUNTIME_INFO_ERROR_OUT_OF_MEMORY = TIZEN_ERROR_OUT_OF_MEMORY,			/**< Out of memory */
 	RUNTIME_INFO_ERROR_IO_ERROR =  TIZEN_ERROR_IO_ERROR,					/**< An input/output error occurred when read value from system */
 	RUNTIME_INFO_ERROR_PERMISSION_DENIED = TIZEN_ERROR_PERMISSION_DENIED,	/**< No permission to use the api */
+	RUNTIME_INFO_ERROR_NOT_SUPPORTED = TIZEN_ERROR_NOT_SUPPORTED,			/**< Not supported */
 } runtime_info_error_e;
 
 /**
@@ -165,6 +166,7 @@ int runtime_info_get_value_int(runtime_info_key_e key, int *value);
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An input/output error occurred when read value from system
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported
  */
 int runtime_info_get_value_bool(runtime_info_key_e key, bool *value);
 
