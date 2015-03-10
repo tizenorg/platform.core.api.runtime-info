@@ -256,6 +256,134 @@ int runtime_info_set_changed_cb(runtime_info_key_e key, runtime_info_changed_cb 
 int runtime_info_unset_changed_cb(runtime_info_key_e key);
 
 /**
+ * @brief Structure for memory information.
+ * @since_tizen 2.4
+ */
+typedef struct {
+	int total;  /**< Total memory (KiB) */
+	int used;   /**< Used memory (KiB) */
+	int free;   /**< Free memory (KiB) */
+	int cache;  /**< Cache memory (KiB) */
+	int swap;   /**< Swap memory (KiB) */
+} runtime_memory_info_s;
+
+/**
+ * @brief   Gets system memory information
+ * @since_tizen 2.4
+ *
+ * @param[out] info The system memory information structure
+ *
+ * @return  @c 0 on success,
+ *          otherwise a negative error value
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE              Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An Input/Output error occured while reading from system
+ *
+ * @see runtime_info_get_process_memory_info()
+ */
+int runtime_info_get_system_memory_info(runtime_memory_info_s *info);
+
+/**
+ * @brief Structure for memory information per processes.
+ * @since_tizen 2.4
+ */
+typedef struct {
+	int vsz;            /**< Virtual memory size (KiB) */
+	int rss;            /**< Resident set size (KiB) */
+	int pss;            /**< Proportional set size (KiB) */
+	int shared_clean;   /**< Not modified and mapped by other processes (KiB) */
+	int shared_dirty;   /**< Modified and mapped by other processes (KiB) */
+	int private_clean;  /**< Not modified and available only to that process (KiB) */
+	int private_dirty;  /**< Modified and available only to that process (KiB) */
+} process_memory_info_s;
+
+/**
+ * @brief   Gets memory information per processes
+ * @since_tizen 2.4
+ * @privlevel public
+ * @privilege %http://tizen.org/privilege/systemmonitor
+ *
+ * @remarks You must release @a s value using free(). \n
+ *          The size of @a s is the same with @a size.
+ *
+ * @param[in]  pid The process unique id array
+ * @param[in]  size The size of pid array
+ * @param[out] info The memory information structure array of the processes
+ *
+ * @return  @c 0 on success,
+ *          otherwise a negative error value
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE              Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED Permission denied
+ *
+ * @see runtime_info_get_system_memory_info()
+ */
+int runtime_info_get_process_memory_info(int *pid, int size, process_memory_info_s **info);
+
+/**
+ * @brief Structure for cpu usage.
+ * @since_tizen 2.4
+ */
+typedef struct {
+	double user;   /**< Time running un-niced user processes (Percent) */
+	double system; /**< Time running kernel processes (Percent) */
+	double nice;   /**< Time running niced user processes (Percent) */
+	double iowait; /**< Time waiting for I/O completion (Percent) */
+} runtime_cpu_usage_s;
+
+/**
+ * @brief   Gets cpu information
+ * @since_tizen 2.4
+ *
+ * @param[out] usage The cpu usage structure
+ *
+ * @return  @c 0 on success,
+ *          otherwise a negative error value
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE              Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An input/output error occured while reading from system
+ *
+ * @see runtime_info_get_process_cpu_usage()
+ */
+int runtime_info_get_cpu_usage(runtime_cpu_usage_s *usage);
+
+/**
+ * @brief Structure for cpu usage per processes.
+ * @since_tizen 2.4
+ */
+typedef struct {
+	int utime;    /**< Amount of time that this process has been scheduled in user mode (clock ticks) */
+	int stime;    /**< Amount of time that this process has been scheduled in kernel mode (clock ticks) */
+} process_cpu_usage_s;
+
+/**
+ * @brief   Gets cpu usage per processes
+ * @since_tizen 2.4
+ * @privlevel public
+ * @privilege %http://tizen.org/privilege/systemmonitor
+ *
+ * @remarks You must release @a s value using free(). \n
+ *          The size of @a s is the same with @a size.
+ *
+ * @param[in]  pid The process unique id array
+ * @param[in]  size The size of pid array
+ * @param[out] usage The cpu usage structure array of the processes
+ *
+ * @return  @c 0 on success,
+ *          otherwise a negative error value
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE              Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED Permission denied
+ *
+ * @see runtime_info_get_cpu_usage()
+ */
+int runtime_info_get_process_cpu_usage(int *pid, int size, process_cpu_usage_s **usage);
+
+/**
  * @}
  */
 
