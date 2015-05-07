@@ -30,7 +30,6 @@
 
 #define LOG_TAG "CAPI_SYSTEM_RUNTIME_INFO"
 
-static const char *VCONF_WIFI_STATUS = VCONFKEY_WIFI_STATE;
 static const char *VCONF_BT_ENABLED = VCONFKEY_BT_STATUS;
 static const char *VCONF_WIFI_HOTSPOT_ENABLED = VCONFKEY_MOBILE_HOTSPOT_MODE;
 static const char *VCONF_BT_HOTSPOT_ENABLED = VCONFKEY_MOBILE_HOTSPOT_MODE;
@@ -38,44 +37,6 @@ static const char *VCONF_USB_HOTSPOT_ENABLED = VCONFKEY_MOBILE_HOTSPOT_MODE;
 static const char *VCONF_PACKET_DATA_ENABLED = VCONFKEY_3G_ENABLE;
 static const char *VCONF_DATA_ROAMING_ENABLED = VCONFKEY_SETAPPL_STATE_DATA_ROAMING_BOOL;
 static const char *VCONF_GPS_STATUS = VCONFKEY_LOCATION_GPS_STATE;
-
-int runtime_info_wifi_status_get_value(runtime_info_value_h value)
-{
-	int vconf_value;
-
-	if (runtime_info_vconf_get_value_int(VCONF_WIFI_STATUS, &vconf_value))
-		vconf_value = VCONFKEY_WIFI_OFF;
-
-	switch (vconf_value) {
-	case VCONFKEY_WIFI_OFF:
-		value->i = RUNTIME_INFO_WIFI_STATUS_DISABLED;
-		break;
-
-	case VCONFKEY_WIFI_UNCONNECTED:
-		value->i = RUNTIME_INFO_WIFI_STATUS_UNCONNECTED;
-		break;
-
-	case VCONFKEY_WIFI_CONNECTED:
-	case VCONFKEY_WIFI_TRANSFER:
-		value->i = RUNTIME_INFO_WIFI_STATUS_CONNECTED;
-		break;
-
-	default:
-		return RUNTIME_INFO_ERROR_IO_ERROR;
-	}
-
-	return RUNTIME_INFO_ERROR_NONE;
-}
-
-int runtime_info_wifi_status_set_event_cb()
-{
-	return runtime_info_vconf_set_event_cb(VCONF_WIFI_STATUS, RUNTIME_INFO_KEY_WIFI_STATUS, 0);
-}
-
-void runtime_info_wifi_status_unset_event_cb()
-{
-	runtime_info_vconf_unset_event_cb(VCONF_WIFI_STATUS, 0);
-}
 
 int runtime_info_bt_enabled_get_value(runtime_info_value_h value)
 {

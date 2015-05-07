@@ -30,40 +30,15 @@
 
 #define LOG_TAG "CAPI_SYSTEM_RUNTIME_INFO"
 
-static const char *VCONF_FLIGHT_MODE = VCONFKEY_TELEPHONY_FLIGHT_MODE;
 static const char *VCONF_AUDIO_JACK = VCONFKEY_SYSMAN_EARJACK;
-static const char *VCONF_SOUND_ENABLED = VCONFKEY_SETAPPL_SOUND_STATUS_BOOL;
 static const char *VCONF_VIBRATION_ENABLED = VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL;
 static const char *VCONF_ROTATION_LOCK_ENABLED = VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL;
 static const char *VCONF_BATTERY_CHARGING = VCONFKEY_SYSMAN_BATTERY_CHARGE_NOW;
 static const char *VCONF_TVOUT_CONNECTED = VCONFKEY_SYSMAN_EARJACK;
 static const char *VCONF_AUDIO_JACK_STATUS = VCONFKEY_SYSMAN_EARJACK;
-static const char *VCONF_SLIDING_KEYBOARD_STATUS = VCONFKEY_SYSMAN_SLIDING_KEYBOARD;
 static const char *VCONF_USB_CONNECTED = VCONFKEY_SYSMAN_USB_STATUS;
 static const char *VCONF_CHARGER_CONNECTED = VCONFKEY_SYSMAN_CHARGER_STATUS;
 
-
-int runtime_info_flightmode_get_value(runtime_info_value_h value)
-{
-	int vconf_value;
-
-	if (runtime_info_vconf_get_value_bool(VCONF_FLIGHT_MODE, &vconf_value))
-		vconf_value = 0;
-
-	value->b = (bool)vconf_value;
-
-	return RUNTIME_INFO_ERROR_NONE;
-}
-
-int runtime_info_flightmode_set_event_cb(void)
-{
-	return runtime_info_vconf_set_event_cb(VCONF_FLIGHT_MODE, RUNTIME_INFO_KEY_FLIGHT_MODE_ENABLED, 0);
-}
-
-void runtime_info_flightmode_unset_event_cb(void)
-{
-	runtime_info_vconf_unset_event_cb(VCONF_FLIGHT_MODE, 0);
-}
 
 int runtime_info_audiojack_get_value(runtime_info_value_h value)
 {
@@ -96,45 +71,6 @@ int runtime_info_audiojack_set_event_cb(void)
 void runtime_info_audiojack_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_AUDIO_JACK, 0);
-}
-
-int runtime_info_silent_mode_get_value(runtime_info_value_h value)
-{
-	int sound, vib;
-
-	if (runtime_info_vconf_get_value_bool(VCONF_SOUND_ENABLED, &sound))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
-
-	if (runtime_info_vconf_get_value_bool(VCONF_VIBRATION_ENABLED, &vib))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
-
-	if (sound == 0 && vib == 0)
-		value->b = true;
-	else
-		value->b = false;
-
-	return RUNTIME_INFO_ERROR_NONE;
-}
-
-int runtime_info_silent_mode_set_event_cb(void)
-{
-	int ret;
-
-	ret = runtime_info_vconf_set_event_cb(VCONF_SOUND_ENABLED, RUNTIME_INFO_KEY_SILENT_MODE_ENABLED, 0);
-	if (ret != RUNTIME_INFO_ERROR_NONE)
-		return ret;
-
-	ret = runtime_info_vconf_set_event_cb(VCONF_VIBRATION_ENABLED, RUNTIME_INFO_KEY_SILENT_MODE_ENABLED, 1);
-	if (ret != RUNTIME_INFO_ERROR_NONE)
-		runtime_info_vconf_unset_event_cb(VCONF_SOUND_ENABLED, 0);
-
-	return ret;
-}
-
-void runtime_info_silent_mode_unset_event_cb(void)
-{
-	runtime_info_vconf_unset_event_cb(VCONF_SOUND_ENABLED, 0);
-	runtime_info_vconf_unset_event_cb(VCONF_VIBRATION_ENABLED, 1);
 }
 
 int runtime_info_vibration_enabled_get_value(runtime_info_value_h value)
@@ -273,45 +209,6 @@ void runtime_info_audio_jack_status_unset_event_cb(void)
 	runtime_info_vconf_unset_event_cb(VCONF_AUDIO_JACK_STATUS, 2);
 }
 
-
-int runtime_info_sliding_keyboard_opened_get_value(runtime_info_value_h value)
-{
-	int vconf_value;
-
-	if (runtime_info_vconf_get_value_int(VCONF_SLIDING_KEYBOARD_STATUS, &vconf_value))
-		vconf_value = VCONFKEY_SYSMAN_SLIDING_KEYBOARD_NOT_SUPPORTED;
-
-	switch (vconf_value) {
-	case VCONFKEY_SYSMAN_SLIDING_KEYBOARD_NOT_AVAILABE:
-		value->b = false;
-		break;
-
-	case VCONFKEY_SYSMAN_SLIDING_KEYBOAED_AVAILABLE:
-		value->b = true;
-		break;
-
-	case VCONFKEY_SYSMAN_SLIDING_KEYBOARD_NOT_SUPPORTED:
-		value->b = false;
-		break;
-
-	default:
-		return RUNTIME_INFO_ERROR_IO_ERROR;
-	}
-
-	return RUNTIME_INFO_ERROR_NONE;
-}
-
-int runtime_info_sliding_keyboard_opened_set_event_cb(void)
-{
-	return runtime_info_vconf_set_event_cb(VCONF_SLIDING_KEYBOARD_STATUS, RUNTIME_INFO_KEY_SLIDING_KEYBOARD_OPENED, 0);
-}
-
-void runtime_info_sliding_keyboard_opened_unset_event_cb(void)
-{
-	runtime_info_vconf_unset_event_cb(VCONF_SLIDING_KEYBOARD_STATUS, 0);
-}
-
-
 int runtime_info_usb_connected_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
@@ -385,28 +282,3 @@ void runtime_info_charger_connected_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_CHARGER_CONNECTED, 0);
 }
-
-
-int runtime_info_vibration_level_haptic_feedback_get_value(runtime_info_value_h value)
-{
-	int vconf_value;
-
-	if (runtime_info_vconf_get_value_int(VCONFKEY_SETAPPL_TOUCH_FEEDBACK_VIBRATION_LEVEL_INT, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
-
-	value->i = vconf_value;
-
-	return RUNTIME_INFO_ERROR_NONE;
-}
-
-int runtime_info_vibration_level_haptic_feedback_set_event_cb(void)
-{
-	return runtime_info_vconf_set_event_cb(VCONFKEY_SETAPPL_TOUCH_FEEDBACK_VIBRATION_LEVEL_INT, RUNTIME_INFO_KEY_VIBRATION_LEVEL_HAPTIC_FEEDBACK, 0);
-}
-
-void runtime_info_vibration_level_haptic_feedback_unset_event_cb(void)
-{
-	runtime_info_vconf_unset_event_cb(VCONFKEY_SETAPPL_TOUCH_FEEDBACK_VIBRATION_LEVEL_INT, 0);
-}
-
-

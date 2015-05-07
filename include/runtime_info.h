@@ -46,32 +46,22 @@ typedef enum {
  * @brief Enumeration for keys for runtime information..
  */
 typedef enum {
-	RUNTIME_INFO_KEY_FLIGHT_MODE_ENABLED,					/**<@internal Indicates whether the device is in flight mode. */
-	RUNTIME_INFO_KEY_WIFI_STATUS,							/**<@internal Indicates the current status of Wi-Fi. */
 	RUNTIME_INFO_KEY_BLUETOOTH_ENABLED,						/**<Indicates whether Bluetooth is enabled. */
 	RUNTIME_INFO_KEY_WIFI_HOTSPOT_ENABLED,					/**<Indicates whether Wi-Fi hotspot is enabled. */
 	RUNTIME_INFO_KEY_BLUETOOTH_TETHERING_ENABLED,			/**<Indicates whether Bluetooth tethering is enabled. */
 	RUNTIME_INFO_KEY_USB_TETHERING_ENABLED,					/**<Indicates whether USB tethering is enabled. */
 	RUNTIME_INFO_KEY_LOCATION_SERVICE_ENABLED,				/**<Indicates whether the location service is allowed to use location data from GPS satellites. */
-	RUNTIME_INFO_KEY_LOCATION_ADVANCED_GPS_ENABLED,			/**<@internal Indicates whether the location service is allowed to download location data for GPS operation. */
 	RUNTIME_INFO_KEY_LOCATION_NETWORK_POSITION_ENABLED,		/**<Indicates whether the location service is allowed to use location data from cellular and Wi-Fi. */
 	RUNTIME_INFO_KEY_PACKET_DATA_ENABLED,					/**<Indicates Whether the packet data through 3G network is enabled. */
 	RUNTIME_INFO_KEY_DATA_ROAMING_ENABLED,					/**<Indicates whether data roaming is enabled. */
-	RUNTIME_INFO_KEY_SILENT_MODE_ENABLED,					/**<@internal Indicates whether the device is in silent mode. */
 	RUNTIME_INFO_KEY_VIBRATION_ENABLED,						/**<Indicates whether vibration is enabled. */
-	RUNTIME_INFO_KEY_24HOUR_CLOCK_FORMAT_ENABLED,			/**<@internal Indicates whether 24-hour clock is enabled. */
-	RUNTIME_INFO_KEY_FIRST_DAY_OF_WEEK,						/**<@internal Indicates the first day of week. */
-	RUNTIME_INFO_KEY_LANGUAGE,								/**<@internal Indicates the current language setting. */
-	RUNTIME_INFO_KEY_REGION,								/**<@internal Indicates the current region setting. */
 	RUNTIME_INFO_KEY_AUDIO_JACK_CONNECTED,					/**<Indicates whether audio jack is connected. */
 	RUNTIME_INFO_KEY_GPS_STATUS,							/**<Indicates the current status of GPS. */
 	RUNTIME_INFO_KEY_BATTERY_IS_CHARGING,					/**<Indicates the battery is currently charging. */
 	RUNTIME_INFO_KEY_TV_OUT_CONNECTED,						/**<Indicates whether TV out is connected. */
 	RUNTIME_INFO_KEY_AUDIO_JACK_STATUS,						/**<Indicates the current status of audio jack. */
-	RUNTIME_INFO_KEY_SLIDING_KEYBOARD_OPENED,				/**<@internal Indicates whether sliding keyboard is opened. */
 	RUNTIME_INFO_KEY_USB_CONNECTED,							/**<Indicates whether USB is connected. */
 	RUNTIME_INFO_KEY_CHARGER_CONNECTED,						/**<Indicates whether charger is connected. */
-	RUNTIME_INFO_KEY_VIBRATION_LEVEL_HAPTIC_FEEDBACK,		/**<@internal Indicates the current vibration level of haptic feedback. */
 	RUNTIME_INFO_KEY_AUTO_ROTATION_ENABLED,					/**<Indicates whether auto rotation is enabled. */
 } runtime_info_key_e;
 
@@ -93,20 +83,6 @@ typedef enum {
 	RUNTIME_INFO_GPS_STATUS_SEARCHING,				/**< GPS is searching for satellites. */
 	RUNTIME_INFO_GPS_STATUS_CONNECTED,				/**< GPS connection is established. */
 } runtime_info_gps_status_e;
-
-/**
- * @internal
- * @brief Enumeration for first day of week.
- */
-typedef enum {
-	RUNTIME_INFO_FIRST_DAY_OF_WEEK_SUNDAY,			/**< Sunday */
-	RUNTIME_INFO_FIRST_DAY_OF_WEEK_MONDAY,			/**< Monday */
-	RUNTIME_INFO_FIRST_DAY_OF_WEEK_TUESDAY,			/**< Tuesday */
-	RUNTIME_INFO_FIRST_DAY_OF_WEEK_WEDNESDAY,		/**< Wednesday */
-	RUNTIME_INFO_FIRST_DAY_OF_WEEK_THURSDAY,		/**< Thursday */
-	RUNTIME_INFO_FIRST_DAY_OF_WEEK_FRIDAY,			/**< Friday */
-	RUNTIME_INFO_FIRST_DAY_OF_WEEK_SATURDAY,		/**< Saturday */
-} runtime_info_first_day_of_week_e;
 
 /**
  * @brief Enumeration for audio jack status.

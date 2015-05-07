@@ -54,26 +54,6 @@ typedef runtime_info_item_s * runtime_info_item_h;
 runtime_info_item_s runtime_info_item_table[] = {
 
 {
-	RUNTIME_INFO_KEY_FLIGHT_MODE_ENABLED, /**<Indicates whether the device is in flight mode. */
-	RUNTIME_INFO_DATA_TYPE_BOOL,
-	runtime_info_flightmode_get_value,
-	runtime_info_flightmode_set_event_cb,
-	runtime_info_flightmode_unset_event_cb,
-	NULL
-},
-
-
-{
-	RUNTIME_INFO_KEY_WIFI_STATUS, /**<Indicates the current status of Wi-Fi. */
-	RUNTIME_INFO_DATA_TYPE_INT,
-	runtime_info_wifi_status_get_value,
-	runtime_info_wifi_status_set_event_cb,
-	runtime_info_wifi_status_unset_event_cb,
-	NULL
-},
-
-
-{
 	RUNTIME_INFO_KEY_BLUETOOTH_ENABLED, /**<Indicates whether Bluetooth is enabled. */
 	RUNTIME_INFO_DATA_TYPE_BOOL,
 	runtime_info_bt_enabled_get_value,
@@ -119,15 +99,6 @@ runtime_info_item_s runtime_info_item_table[] = {
 },
 
 {
-	RUNTIME_INFO_KEY_LOCATION_ADVANCED_GPS_ENABLED, /**<Indicates whether the location service is allowed to download location data for GPS operation. */
-	RUNTIME_INFO_DATA_TYPE_BOOL,
-	runtime_info_location_agps_get_value,
-	runtime_info_location_agps_set_event_cb,
-	runtime_info_location_agps_unset_event_cb,
-	NULL
-},
-
-{
 	RUNTIME_INFO_KEY_LOCATION_NETWORK_POSITION_ENABLED, /**<Indicates whether the location service is allowed to use location data from cellular and Wi-Fi. */
 	RUNTIME_INFO_DATA_TYPE_BOOL,
 	runtime_info_location_network_get_value,
@@ -155,56 +126,11 @@ runtime_info_item_s runtime_info_item_table[] = {
 },
 
 {
-	RUNTIME_INFO_KEY_SILENT_MODE_ENABLED, /**<Indicates whether the device is in silent mode. */
-	RUNTIME_INFO_DATA_TYPE_BOOL,
-	runtime_info_silent_mode_get_value,
-	runtime_info_silent_mode_set_event_cb,
-	runtime_info_silent_mode_unset_event_cb,
-	NULL
-},
-
-{
 	RUNTIME_INFO_KEY_VIBRATION_ENABLED, /**<Indicates whether vibration is enabled. */
 	RUNTIME_INFO_DATA_TYPE_BOOL,
 	runtime_info_vibration_enabled_get_value,
 	runtime_info_vibration_enabled_set_event_cb,
 	runtime_info_vibration_enabled_unset_event_cb,
-	NULL
-},
-
-{
-	RUNTIME_INFO_KEY_24HOUR_CLOCK_FORMAT_ENABLED, /**<Indicates the current time format. */
-	RUNTIME_INFO_DATA_TYPE_BOOL,
-	runtime_info_24hour_format_get_value,
-	runtime_info_24hour_format_set_event_cb,
-	runtime_info_24hour_format_unset_event_cb,
-	NULL
-},
-
-{
-	RUNTIME_INFO_KEY_FIRST_DAY_OF_WEEK, /**<Indicates the first day of week. */
-	RUNTIME_INFO_DATA_TYPE_INT,
-	runtime_info_first_day_of_week_get_value,
-	runtime_info_first_day_of_week_set_event_cb,
-	runtime_info_first_day_of_week_unset_event_cb,
-	NULL
-},
-
-{
-	RUNTIME_INFO_KEY_LANGUAGE, /**<Indicates the current language setting. */
-	RUNTIME_INFO_DATA_TYPE_STRING,
-	runtime_info_language_get_value,
-	runtime_info_language_set_event_cb,
-	runtime_info_language_unset_event_cb,
-	NULL
-},
-
-{
-	RUNTIME_INFO_KEY_REGION, /**<Indicates the current region setting. */
-	RUNTIME_INFO_DATA_TYPE_STRING,
-	runtime_info_region_get_value,
-	runtime_info_region_set_event_cb,
-	runtime_info_region_unset_event_cb,
 	NULL
 },
 
@@ -254,15 +180,6 @@ runtime_info_item_s runtime_info_item_table[] = {
 },
 
 {
-	RUNTIME_INFO_KEY_SLIDING_KEYBOARD_OPENED, /**<Indicates whether sliding keyboard is opened. */
-	RUNTIME_INFO_DATA_TYPE_BOOL,
-	runtime_info_sliding_keyboard_opened_get_value,
-	runtime_info_sliding_keyboard_opened_set_event_cb,
-	runtime_info_sliding_keyboard_opened_unset_event_cb,
-	NULL
-},
-
-{
 	RUNTIME_INFO_KEY_USB_CONNECTED, /**<Indicates whether usb is connected. */
 	RUNTIME_INFO_DATA_TYPE_BOOL,
 	runtime_info_usb_connected_get_value,
@@ -277,15 +194,6 @@ runtime_info_item_s runtime_info_item_table[] = {
 	runtime_info_charger_connected_get_value,
 	runtime_info_charger_connected_set_event_cb,
 	runtime_info_charger_connected_unset_event_cb,
-	NULL
-},
-
-{
-	RUNTIME_INFO_KEY_VIBRATION_LEVEL_HAPTIC_FEEDBACK, /**<Indicates the current vibration level of haptic feedback. */
-	RUNTIME_INFO_DATA_TYPE_INT,
-	runtime_info_vibration_level_haptic_feedback_get_value,
-	runtime_info_vibration_level_haptic_feedback_set_event_cb,
-	runtime_info_vibration_level_haptic_feedback_unset_event_cb,
 	NULL
 },
 
