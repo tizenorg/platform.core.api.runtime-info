@@ -316,7 +316,10 @@ typedef struct {
  *
  * @retval  #RUNTIME_INFO_ERROR_NONE              Successful
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
- * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED Permission denied
+ * @retval  #RUNTIME_INFO_ERROR_OUT_OF_MEMORY	  Not able to allocate memory (for output param/other operations)
+ * @retval  #RUNTIME_INFO_ERROR_REMOTE_IO	  Call to resource daemon failed (dbus errors/resource daemon errors)
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR	  An I/O error during dbus message operations
+ * @retval  #RUNTIME_INFO_PERMISSION_DENIED	  Process not authorized to request process usage info
  *
  * @see runtime_info_get_system_memory_info()
  */
@@ -377,7 +380,10 @@ typedef struct {
  *
  * @retval  #RUNTIME_INFO_ERROR_NONE              Successful
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
- * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED Permission denied
+ * @retval  #RUNTIME_INFO_ERROR_OUT_OF_MEMORY	  Not able to allocate memory (for output param/other operations)
+ * @retval  #RUNTIME_INFO_ERROR_REMOTE_IO	  Call to resource daemon failed (dbus errors/resource daemon errors)
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR	  An I/O error occured (during dbus message operations/other IO operations)
+ * @retval  #RUNTIME_INFO_PERMISSION_DENIED	  Process not authorized to request process usage info
  *
  * @see runtime_info_get_cpu_usage()
  */

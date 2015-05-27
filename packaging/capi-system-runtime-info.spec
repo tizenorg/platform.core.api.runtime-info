@@ -11,6 +11,7 @@ BuildRequires:  cmake
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(capi-base-common)
+BuildRequires:	pkgconfig(edbus)
 Requires(post): /sbin/ldconfig  
 Requires(postun): /sbin/ldconfig
 
