@@ -33,11 +33,13 @@ extern "C"
  * @brief Enumeration for error codes for runtime information.
  */
 typedef enum {
-	RUNTIME_INFO_ERROR_NONE = TIZEN_ERROR_NONE,								/**< Successful */
+	RUNTIME_INFO_ERROR_NONE = TIZEN_ERROR_NONE,				/**< Successful */
 	RUNTIME_INFO_ERROR_INVALID_PARAMETER = TIZEN_ERROR_INVALID_PARAMETER,	/**< Invalid parameter */
-	RUNTIME_INFO_ERROR_OUT_OF_MEMORY = TIZEN_ERROR_OUT_OF_MEMORY,			/**< Out of memory */
-	RUNTIME_INFO_ERROR_IO_ERROR =  TIZEN_ERROR_IO_ERROR,					/**< An input/output error occurred when read value from system */
+	RUNTIME_INFO_ERROR_OUT_OF_MEMORY = TIZEN_ERROR_OUT_OF_MEMORY,		/**< Out of memory */
+	RUNTIME_INFO_ERROR_IO_ERROR = TIZEN_ERROR_IO_ERROR,			/**< An input/output error occurred when read value from system */
+	RUNTIME_INFO_ERROR_REMOTE_IO = TIZEN_ERROR_REMOTE_IO,			/**< Remote I/O error occured */
 	RUNTIME_INFO_ERROR_PERMISSION_DENIED = TIZEN_ERROR_PERMISSION_DENIED,	/**< No permission to use the api */
+	RUNTIME_INFO_ERROR_NOT_SUPPORTED = TIZEN_ERROR_NOT_SUPPORTED,			/**< Not supported parameter @if MOBILE (Since 2.3.1) @endif */
 } runtime_info_error_e;
 
 /**
@@ -146,6 +148,7 @@ typedef void (*runtime_info_changed_cb)(runtime_info_key_e key, void *user_data)
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An input/output error occurred when read value from system
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @endif
  */
 int runtime_info_get_value_int(runtime_info_key_e key, int *value);
 
@@ -165,6 +168,7 @@ int runtime_info_get_value_int(runtime_info_key_e key, int *value);
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An input/output error occurred when read value from system
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @endif
  */
 int runtime_info_get_value_bool(runtime_info_key_e key, bool *value);
 
@@ -184,6 +188,7 @@ int runtime_info_get_value_bool(runtime_info_key_e key, bool *value);
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An input/output error occurred when read value from system
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @endif
  */
 int runtime_info_get_value_double(runtime_info_key_e key, double *value);
 
@@ -206,6 +211,7 @@ int runtime_info_get_value_double(runtime_info_key_e key, double *value);
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An input/output error occurred when read value from system
  * @retval  #RUNTIME_INFO_ERROR_OUT_OF_MEMORY     Out of memory
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @endif
  */
 int runtime_info_get_value_string(runtime_info_key_e key, char **value);
 
@@ -224,6 +230,7 @@ int runtime_info_get_value_string(runtime_info_key_e key, char **value);
  * @retval  #RUNTIME_INFO_ERROR_NONE              Successful
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @endif
  * @post runtime_info_changed_cb() will be invoked.
  *
  * @see runtime_info_unset_changed_cb()
