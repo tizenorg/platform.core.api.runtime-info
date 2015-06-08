@@ -68,9 +68,11 @@ void runtime_info_flightmode_unset_event_cb(void)
 int runtime_info_audiojack_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_int(VCONF_AUDIO_JACK, &vconf_value))
-		vconf_value = VCONFKEY_SYSMAN_EARJACK_REMOVED;
+	ret = runtime_info_vconf_get_value_int(VCONF_AUDIO_JACK, &vconf_value);
+	if (ret != RUNTIME_INFO_ERROR_NONE)
+		return ret;
 
 	switch (vconf_value) {
 	case VCONFKEY_SYSMAN_EARJACK_3WIRE:
@@ -83,7 +85,7 @@ int runtime_info_audiojack_get_value(runtime_info_value_h value)
 		break;
 	}
 
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_audiojack_set_event_cb(void)
@@ -138,13 +140,13 @@ void runtime_info_silent_mode_unset_event_cb(void)
 int runtime_info_vibration_enabled_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_bool(VCONF_VIBRATION_ENABLED, &vconf_value))
-		vconf_value = 0;
+	ret = runtime_info_vconf_get_value_bool(VCONF_VIBRATION_ENABLED, &vconf_value);
+	if (ret == RUNTIME_INFO_ERROR_NONE)
+		value->b = (bool)vconf_value;
 
-	value->b = (bool)vconf_value;
-
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_vibration_enabled_set_event_cb(void)
@@ -160,13 +162,13 @@ void runtime_info_vibration_enabled_unset_event_cb(void)
 int runtime_info_auto_rotation_enabled_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_bool(VCONF_ROTATION_LOCK_ENABLED, &vconf_value))
-		vconf_value = 0;
+	ret = runtime_info_vconf_get_value_bool(VCONF_ROTATION_LOCK_ENABLED, &vconf_value);
+	if (ret == RUNTIME_INFO_ERROR_NONE)
+		value->b = (bool)vconf_value;
 
-	value->b = (bool)vconf_value;
-
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_auto_rotation_enabled_set_event_cb(void)
@@ -182,17 +184,13 @@ void runtime_info_auto_rotation_enabled_unset_event_cb(void)
 int runtime_info_battery_charging_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_int(VCONF_BATTERY_CHARGING, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+	ret = runtime_info_vconf_get_value_int(VCONF_BATTERY_CHARGING, &vconf_value);
+	if (ret == RUNTIME_INFO_ERROR_NONE)
+		value->b = vconf_value;
 
-	/* regard not supported as disconnected */
-	if (vconf_value == -ENOTSUP)
-		vconf_value = false;
-
-	value->b = vconf_value;
-
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_battery_charging_set_event_cb(void)
@@ -209,9 +207,11 @@ void runtime_info_battery_charging_unset_event_cb(void)
 int runtime_info_tvout_connected_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_int(VCONF_TVOUT_CONNECTED, &vconf_value))
-		vconf_value = VCONFKEY_SYSMAN_EARJACK_REMOVED;
+	ret = runtime_info_vconf_get_value_int(VCONF_TVOUT_CONNECTED, &vconf_value);
+	if (ret != RUNTIME_INFO_ERROR_NONE)
+		return ret;
 
 	switch (vconf_value) {
 	case VCONFKEY_SYSMAN_EARJACK_TVOUT:
@@ -223,7 +223,7 @@ int runtime_info_tvout_connected_get_value(runtime_info_value_h value)
 		break;
 	}
 
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_tvout_connected_set_event_cb(void)
@@ -240,9 +240,11 @@ void runtime_info_tvout_connected_unset_event_cb(void)
 int runtime_info_audio_jack_status_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_int(VCONF_AUDIO_JACK_STATUS, &vconf_value))
-		vconf_value = VCONFKEY_SYSMAN_EARJACK_REMOVED;
+	ret = runtime_info_vconf_get_value_int(VCONF_AUDIO_JACK_STATUS, &vconf_value);
+	if (ret != RUNTIME_INFO_ERROR_NONE)
+		return ret;
 
 	switch (vconf_value) {
 	case VCONFKEY_SYSMAN_EARJACK_3WIRE:
@@ -258,7 +260,7 @@ int runtime_info_audio_jack_status_get_value(runtime_info_value_h value)
 		break;
 	}
 
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_audio_jack_status_set_event_cb(void)
@@ -313,9 +315,11 @@ void runtime_info_sliding_keyboard_opened_unset_event_cb(void)
 int runtime_info_usb_connected_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_int(VCONF_USB_CONNECTED, &vconf_value))
-		vconf_value = VCONFKEY_SYSMAN_USB_DISCONNECTED;
+	ret = runtime_info_vconf_get_value_int(VCONF_USB_CONNECTED, &vconf_value);
+	if (ret != RUNTIME_INFO_ERROR_NONE)
+		return ret;
 
 	switch (vconf_value) {
 	case VCONFKEY_SYSMAN_USB_DISCONNECTED:
@@ -334,7 +338,7 @@ int runtime_info_usb_connected_get_value(runtime_info_value_h value)
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 	}
 
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_usb_connected_set_event_cb(void)
@@ -350,14 +354,14 @@ void runtime_info_usb_connected_unset_event_cb(void)
 int runtime_info_charger_connected_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_int(VCONF_CHARGER_CONNECTED, &vconf_value))
-		return RUNTIME_INFO_ERROR_IO_ERROR;
+	ret = runtime_info_vconf_get_value_int(VCONF_CHARGER_CONNECTED, &vconf_value);
+	if (ret != RUNTIME_INFO_ERROR_NONE)
+		return ret;
 
 	switch (vconf_value) {
 	case VCONFKEY_SYSMAN_CHARGER_DISCONNECTED:
-	/* regard not supported as disconnected */
-	case -ENOTSUP:
 		value->b = false;
 		break;
 
@@ -369,7 +373,7 @@ int runtime_info_charger_connected_get_value(runtime_info_value_h value)
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 	}
 
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_charger_connected_set_event_cb(void)

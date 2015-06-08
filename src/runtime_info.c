@@ -344,12 +344,10 @@ int runtime_info_get_value(runtime_info_key_e key, runtime_info_data_type_e data
 	}
 
 	ret = get_value(value);
-	if (ret != RUNTIME_INFO_ERROR_NONE) {
-		LOGE("ERROR(0x%08x) : fail to get the runtime information / key(%d)", ret, key);
-		return ret;
-	}
+	if (ret != RUNTIME_INFO_ERROR_NONE)
+		LOGE("IO_ERROR(0x%08x) : failed to get the runtime informaion / key(%d)", ret, key);
 
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 API int runtime_info_get_value_int(runtime_info_key_e key, int *value)

@@ -37,13 +37,13 @@ static const char *VCONF_LOCATION_NETWORK_ENABLED = VCONFKEY_LOCATION_NETWORK_EN
 int runtime_info_location_service_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_int(VCONF_LOCATION_SERVICE_ENABLED, &vconf_value))
-		vconf_value = 0;
+	ret = runtime_info_vconf_get_value_int(VCONF_LOCATION_SERVICE_ENABLED, &vconf_value);
+	if (ret == RUNTIME_INFO_ERROR_NONE)
+		value->b = vconf_value;
 
-	value->b = vconf_value;
-
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_location_service_set_event_cb()
@@ -59,13 +59,13 @@ void runtime_info_location_service_unset_event_cb()
 int runtime_info_location_agps_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_int(VCONF_LOCATION_AGPS_ENABLED, &vconf_value))
-		vconf_value = 0;
+	ret = runtime_info_vconf_get_value_int(VCONF_LOCATION_AGPS_ENABLED, &vconf_value);
+	if (ret == RUNTIME_INFO_ERROR_NONE)
+		value->b = vconf_value;
 
-	value->b = vconf_value;
-
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_location_agps_set_event_cb()
@@ -81,13 +81,13 @@ void runtime_info_location_agps_unset_event_cb()
 int runtime_info_location_network_get_value(runtime_info_value_h value)
 {
 	int vconf_value;
+	int ret;
 
-	if (runtime_info_vconf_get_value_int(VCONF_LOCATION_NETWORK_ENABLED, &vconf_value))
-		vconf_value = 0;
+	ret = runtime_info_vconf_get_value_int(VCONF_LOCATION_NETWORK_ENABLED, &vconf_value);
+	if (ret == RUNTIME_INFO_ERROR_NONE)
+		value->b = vconf_value;
 
-	value->b = vconf_value;
-
-	return RUNTIME_INFO_ERROR_NONE;
+	return ret;
 }
 
 int runtime_info_location_network_set_event_cb()
