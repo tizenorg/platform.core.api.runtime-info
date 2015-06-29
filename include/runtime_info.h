@@ -46,23 +46,23 @@ typedef enum {
  * @brief Enumeration for keys for runtime information..
  */
 typedef enum {
-	RUNTIME_INFO_KEY_BLUETOOTH_ENABLED,						/**<Indicates whether Bluetooth is enabled. */
-	RUNTIME_INFO_KEY_WIFI_HOTSPOT_ENABLED,					/**<Indicates whether Wi-Fi hotspot is enabled. */
-	RUNTIME_INFO_KEY_BLUETOOTH_TETHERING_ENABLED,			/**<Indicates whether Bluetooth tethering is enabled. */
-	RUNTIME_INFO_KEY_USB_TETHERING_ENABLED,					/**<Indicates whether USB tethering is enabled. */
-	RUNTIME_INFO_KEY_LOCATION_SERVICE_ENABLED,				/**<Indicates whether the location service is allowed to use location data from GPS satellites. */
-	RUNTIME_INFO_KEY_LOCATION_NETWORK_POSITION_ENABLED,		/**<Indicates whether the location service is allowed to use location data from cellular and Wi-Fi. */
-	RUNTIME_INFO_KEY_PACKET_DATA_ENABLED,					/**<Indicates Whether the packet data through 3G network is enabled. */
-	RUNTIME_INFO_KEY_DATA_ROAMING_ENABLED,					/**<Indicates whether data roaming is enabled. */
-	RUNTIME_INFO_KEY_VIBRATION_ENABLED,						/**<Indicates whether vibration is enabled. */
-	RUNTIME_INFO_KEY_AUDIO_JACK_CONNECTED,					/**<Indicates whether audio jack is connected. */
-	RUNTIME_INFO_KEY_GPS_STATUS,							/**<Indicates the current status of GPS. */
-	RUNTIME_INFO_KEY_BATTERY_IS_CHARGING,					/**<Indicates the battery is currently charging. */
-	RUNTIME_INFO_KEY_TV_OUT_CONNECTED,						/**<Indicates whether TV out is connected. */
-	RUNTIME_INFO_KEY_AUDIO_JACK_STATUS,						/**<Indicates the current status of audio jack. */
-	RUNTIME_INFO_KEY_USB_CONNECTED,							/**<Indicates whether USB is connected. */
-	RUNTIME_INFO_KEY_CHARGER_CONNECTED,						/**<Indicates whether charger is connected. */
-	RUNTIME_INFO_KEY_AUTO_ROTATION_ENABLED,					/**<Indicates whether auto rotation is enabled. */
+	RUNTIME_INFO_KEY_BLUETOOTH_ENABLED					= 2,	/**<Indicates whether Bluetooth is enabled. */
+	RUNTIME_INFO_KEY_WIFI_HOTSPOT_ENABLED				= 3,	/**<Indicates whether Wi-Fi hotspot is enabled. */
+	RUNTIME_INFO_KEY_BLUETOOTH_TETHERING_ENABLED		= 4,	/**<Indicates whether Bluetooth tethering is enabled. */
+	RUNTIME_INFO_KEY_USB_TETHERING_ENABLED				= 5,	/**<Indicates whether USB tethering is enabled. */
+	RUNTIME_INFO_KEY_LOCATION_SERVICE_ENABLED			= 6,	/**<Indicates whether the location service is allowed to use location data from GPS satellites. */
+	RUNTIME_INFO_KEY_LOCATION_NETWORK_POSITION_ENABLED	= 8,	/**<Indicates whether the location service is allowed to use location data from cellular and Wi-Fi. */
+	RUNTIME_INFO_KEY_PACKET_DATA_ENABLED				= 9,	/**<Indicates Whether the packet data through 3G network is enabled. */
+	RUNTIME_INFO_KEY_DATA_ROAMING_ENABLED				= 10,	/**<Indicates whether data roaming is enabled. */
+	RUNTIME_INFO_KEY_VIBRATION_ENABLED					= 12,	/**<Indicates whether vibration is enabled. */
+	RUNTIME_INFO_KEY_AUDIO_JACK_CONNECTED				= 17,	/**<Indicates whether audio jack is connected. */
+	RUNTIME_INFO_KEY_GPS_STATUS							= 18,	/**<Indicates the current status of GPS. */
+	RUNTIME_INFO_KEY_BATTERY_IS_CHARGING				= 19,	/**<Indicates the battery is currently charging. */
+	RUNTIME_INFO_KEY_TV_OUT_CONNECTED					= 20,	/**<Indicates whether TV out is connected. */
+	RUNTIME_INFO_KEY_AUDIO_JACK_STATUS					= 21,	/**<Indicates the current status of audio jack. */
+	RUNTIME_INFO_KEY_USB_CONNECTED						= 23,	/**<Indicates whether USB is connected. */
+	RUNTIME_INFO_KEY_CHARGER_CONNECTED					= 24,	/**<Indicates whether charger is connected. */
+	RUNTIME_INFO_KEY_AUTO_ROTATION_ENABLED				= 26,	/**<Indicates whether auto rotation is enabled. */
 } runtime_info_key_e;
 
 
