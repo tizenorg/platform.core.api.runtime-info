@@ -273,10 +273,6 @@ API int runtime_info_get_process_memory_info(int *pid, int size, process_memory_
 		dbus_message_iter_get_basic(&iter_struct, &value);
 		proc_info->private_dirty = value;
 
-		_D("Index %d: Process %d, vsz %d, rss %d, pss %d, sh_clean %d, sh_dirty %d, pr_clean %d, pr_dirty %d",
-			       index, pid[index], proc_info->vsz, proc_info->rss, proc_info->pss,
-			       proc_info->shared_clean, proc_info->shared_dirty,
-			       proc_info->private_clean, proc_info->private_dirty);
 		dbus_message_iter_next(&iter_array);
 	}
 
@@ -385,8 +381,6 @@ API int runtime_info_get_process_cpu_usage(int *pid, int size, process_cpu_usage
 		dbus_message_iter_get_basic(&iter_struct, &value);
 		proc_usage->stime = value;
 
-		_D("Index %d: Process %d, utime %d, stime %d", index, pid[index],
-				proc_usage->utime, proc_usage->stime);
 		dbus_message_iter_next(&iter_array);
 	}
 
