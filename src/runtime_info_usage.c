@@ -387,3 +387,84 @@ API int runtime_info_get_process_cpu_usage(int *pid, int size, process_cpu_usage
 	dbus_message_unref(replymsg);
 	return RUNTIME_INFO_ERROR_NONE;
 }
+
+API int runtime_info_get_processor_count(int *numCore)
+{
+	FILE *cpuinfo_fp;
+	int buf;
+
+	cpuinfo_fp = fopen("/sys/devices/system/cpu/possible", "r");
+	if(cpuinfo_fp == NULL) {
+		_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	if(!fscanf(cpuinfo_fp, "%d-%d", &buf, numCore)) {
+		_E("IO_ERROR(0x%08x) : there is no information in the config file",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	++(*numCore);
+
+	return RUNTIME_INFO_ERROR_NONE;
+}
+
+API int runtime_info_get_processor_frequency(int *cpuFreq)
+{
+	FILE *cpuinfo_fp;
+
+	cpuinfo_fp = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq", "r");
+	if(cpuinfo_fp == NULL) {
+		_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	if(!fscanf(cpuinfo_fp, "%d", cpuFreq)) {
+		_E("IO_ERROR(0x%08x) : there is no information in the config file",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+	(*cpuFreq) /= 1000;
+
+	return RUNTIME_INFO_ERROR_NONE;
+}
+
+API int runtime_info_get_processor_type(char *cpuType, int len)
+{
+	FILE *cpuinfo_fp;
+	char buf[256];
+	char *pBuf = NULL;
+	int written = 0;
+
+	cpuinfo_fp = fopen("/proc/cpuinfo", "r");
+	if(cpuinfo_fp == NULL) {
+		_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	while(fgets(buf, sizeof(buf), cpuinfo_fp) != NULL) {
+		if(!strncmp(buf, "model name", 10)) {
+			pBuf = strchr(buf, ':') + 2;
+
+			while((*pBuf != '\n') && (*pBuf != '\0') && (*pBuf != '@') && (written < len)) {
+				*(cpuType + written) = *pBuf;
+				++pBuf;
+				++written;
+			}
+			*(cpuType + written) = '\0';
+			break;
+		}
+	}
+
+	if(pBuf == NULL) {
+		_E("NOT_SUPPORTED(0x%08x) : there is no processor type information in this system",
+				RUNTIME_INFO_ERROR_NOT_SUPPORTED);
+		return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
+	}
+
+	return RUNTIME_INFO_ERROR_NONE;
+}
