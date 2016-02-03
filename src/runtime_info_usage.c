@@ -387,3 +387,186 @@ API int runtime_info_get_process_cpu_usage(int *pid, int size, process_cpu_usage
 	dbus_message_unref(replymsg);
 	return RUNTIME_INFO_ERROR_NONE;
 }
+
+API int runtime_info_get_processor_count(int *num_core)
+{
+	FILE *cpuinfo_fp;
+	int buf;
+	int result;
+
+	if (!num_core) {
+		_E("INVALID_PARAMETER(0x%08x) : invalid output parameter",
+				RUNTIME_INFO_ERROR_INVALID_PARAMETER);
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+	}
+
+	cpuinfo_fp = fopen("/sys/devices/system/cpu/possible", "r");
+	if(cpuinfo_fp == NULL) {
+		_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	if(!fscanf(cpuinfo_fp, "%d-%d", &buf, &result)) {
+		_E("IO_ERROR(0x%08x) : there is no information in the system file",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	*num_core = result + 1;
+
+	return RUNTIME_INFO_ERROR_NONE;
+}
+
+API int runtime_info_get_processor_current_frequency(int core_num, int *cpu_freq)
+{
+	int num_core;
+	char path[256];
+	FILE *cpuinfo_fp;
+	int result;
+
+	if(runtime_info_get_processor_count(&num_core)) {
+		_E("runtime_info_get_processor_count is failed");
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	if(core_num < 0 || core_num >= num_core) {
+		_E("INVALID_PARAMETER(0x%08x) : invalid input parameter",
+				RUNTIME_INFO_ERROR_INVALID_PARAMETER);
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+	}
+
+	if (!cpu_freq) {
+		_E("INVALID_PARAMETER(0x%08x) : invalid output parameter",
+				RUNTIME_INFO_ERROR_INVALID_PARAMETER);
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+	}
+
+	snprintf(path, sizeof(path), "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_cur_freq",
+			core_num);
+	cpuinfo_fp = fopen(path, "r");
+	if(cpuinfo_fp == NULL) {
+		_I("Fail to get the information about core%d. Get the core0's instead.",
+				core_num);
+
+		cpuinfo_fp = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r");
+		if(cpuinfo_fp == NULL) {
+			_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
+					RUNTIME_INFO_ERROR_IO_ERROR);
+			return RUNTIME_INFO_ERROR_IO_ERROR;
+		}
+	}
+
+	if(!fscanf(cpuinfo_fp, "%d", &result)) {
+		_E("IO_ERROR(0x%08x) : there is no information in the system file",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	*cpu_freq = result / 1000;
+
+	return RUNTIME_INFO_ERROR_NONE;
+}
+
+API int runtime_info_get_processor_max_frequency(int core_num, int *cpu_freq)
+{
+	int num_core;
+	char path[256];
+	FILE *cpuinfo_fp;
+	int result;
+
+	if(runtime_info_get_processor_count(&num_core)) {
+		_E("runtime_info_get_processor_count is failed");
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	if(core_num < 0 || core_num >= num_core) {
+		_E("INVALID_PARAMETER(0x%08x) : invalid input parameter",
+				RUNTIME_INFO_ERROR_INVALID_PARAMETER);
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+	}
+
+	if (!cpu_freq) {
+		_E("INVALID_PARAMETER(0x%08x) : invalid output parameter",
+				RUNTIME_INFO_ERROR_INVALID_PARAMETER);
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+	}
+
+	snprintf(path, sizeof(path), "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_max_freq",
+			core_num);
+	cpuinfo_fp = fopen(path, "r");
+	if(cpuinfo_fp == NULL) {
+		_I("Fail to get the information about core%d. Get the core0's instead.",
+				core_num);
+
+		cpuinfo_fp = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq", "r");
+		if(cpuinfo_fp == NULL) {
+			_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
+					RUNTIME_INFO_ERROR_IO_ERROR);
+			return RUNTIME_INFO_ERROR_IO_ERROR;
+		}
+	}
+
+	if(!fscanf(cpuinfo_fp, "%d", &result)) {
+		_E("IO_ERROR(0x%08x) : there is no information in the system file",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	*cpu_freq = result / 1000;
+
+	return RUNTIME_INFO_ERROR_NONE;
+}
+
+API int runtime_info_get_processor_type(char **cpu_type)
+{
+	FILE *cpuinfo_fp;
+	char buf[256];
+	char result[256];
+	char *pBuf = NULL;
+	int written = 0;
+
+	if (!cpu_type) {
+		_E("INVALID_PARAMETER(0x%08x) : invalid output parameter",
+				RUNTIME_INFO_ERROR_INVALID_PARAMETER);
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+	}
+
+	cpuinfo_fp = fopen("/proc/cpuinfo", "r");
+	if(cpuinfo_fp == NULL) {
+		_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	while(fgets(buf, sizeof(buf), cpuinfo_fp) != NULL) {
+		if(strncmp(buf, "model name", 10))
+			continue;
+
+		pBuf = strchr(buf, ':') + 2;
+
+		while((*pBuf != '\n') && (*pBuf != '\0') && (*pBuf != '@')) {
+			result[written] = *pBuf;
+			++pBuf;
+			++written;
+		}
+		result[written] = '\0';
+		break;
+	}
+
+	if(pBuf == NULL) {
+		_E("NOT_SUPPORTED(0x%08x) : there is no processor type information in this system",
+				RUNTIME_INFO_ERROR_NOT_SUPPORTED);
+		return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
+	}
+
+	*cpu_type = (char*)malloc(sizeof(char) * written);
+	if (!(*cpu_type)) {
+		_E("OUT_OF_MEMORY(0x%08x)", RUNTIME_INFO_ERROR_OUT_OF_MEMORY);
+		return RUNTIME_INFO_ERROR_OUT_OF_MEMORY;
+	}
+
+	strncpy(*cpu_type, result, written);
+
+	return RUNTIME_INFO_ERROR_NONE;
+}
