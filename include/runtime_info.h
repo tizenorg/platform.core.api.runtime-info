@@ -366,8 +366,41 @@ typedef struct {
 int runtime_info_get_process_cpu_usage(int *pid, int size, process_cpu_usage_s **usage);
 
 /**
- * @}
+ * @brief  Gets the number of processors
+ * @since_tizen  3.0
+ * @privlevel  public
+ *
+ * @param[out]  numCore The number of whole processors
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE		Successful
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR	An I/O error occurred (during file open operation)
  */
+int runtime_info_get_processor_count(int *numCore);
+
+/**
+ * @brief  Gets the frequency of processor
+ * @since_tizen  3.0
+ * @privlevel  public
+ *
+ * @param[out]  cpuFreq	The frequency of processor
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE		Successful
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR	An I/O error occurred (during file open operation)
+ */
+int runtime_info_get_processor_frequency(int *cpuFreq);
+
+/**
+ * @brief  Gets the type of processor
+ * @since_tizen  3.0
+ * @privlevel  public
+ *
+ * @param[out]  cpuType	The type of processor
+ * @param[in]  len		The length of cpuType
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE		Successful
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR	An I/O error occurred (during file open operation)
+ */
+int runtime_info_get_processor_type(char *cpuType, int len);
 
 #ifdef __cplusplus
 }
