@@ -366,8 +366,42 @@ typedef struct {
 int runtime_info_get_process_cpu_usage(int *pid, int size, process_cpu_usage_s **usage);
 
 /**
- * @}
+ * @brief  Gets the number of processors
+ * @since_tizen  3.0
+ *
+ * @param[out]  numCore The number of whole processors
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
  */
+int runtime_info_get_processor_count(int *numCore);
+
+/**
+ * @brief  Gets the frequency of processor
+ * @since_tizen  3.0
+ *
+ * @param[out]  cpuFreq	The frequency(Mhz) of processor
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ */
+int runtime_info_get_processor_frequency(int *cpuFreq);
+
+/**
+ * @brief  Gets the type of processor
+ * @since_tizen  3.0
+ * @remarks The @a cpuType should be freed using free()
+ *
+ * @param[out]  cpuType  The type of processor
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_OUT_OF_MEMORY  Not able to allocate memory (for output parameter)
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ */
+int runtime_info_get_processor_type(char **cpuType);
 
 #ifdef __cplusplus
 }

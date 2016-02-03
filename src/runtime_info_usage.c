@@ -387,3 +387,115 @@ API int runtime_info_get_process_cpu_usage(int *pid, int size, process_cpu_usage
 	dbus_message_unref(replymsg);
 	return RUNTIME_INFO_ERROR_NONE;
 }
+
+API int runtime_info_get_processor_count(int *numCore)
+{
+	FILE *cpuinfo_fp;
+	int buf;
+	int result;
+
+	if (!numCore) {
+		_E("INVALID_PARAMETER(0x%08x) : invalid output parameter",
+				RUNTIME_INFO_ERROR_INVALID_PARAMETER);
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+	}
+
+	cpuinfo_fp = fopen("/sys/devices/system/cpu/possible", "r");
+	if(cpuinfo_fp == NULL) {
+		_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	if(!fscanf(cpuinfo_fp, "%d-%d", &buf, &result)) {
+		_E("IO_ERROR(0x%08x) : there is no information in the system file",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	*numCore = result + 1;
+
+	return RUNTIME_INFO_ERROR_NONE;
+}
+
+API int runtime_info_get_processor_frequency(int *cpuFreq)
+{
+	FILE *cpuinfo_fp;
+	int result;
+
+	if (!cpuFreq) {
+		_E("INVALID_PARAMETER(0x%08x) : invalid output parameter",
+				RUNTIME_INFO_ERROR_INVALID_PARAMETER);
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+	}
+
+	cpuinfo_fp = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq", "r");
+	if(cpuinfo_fp == NULL) {
+		_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	if(!fscanf(cpuinfo_fp, "%d", &result)) {
+		_E("IO_ERROR(0x%08x) : there is no information in the system file",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	*cpuFreq = result / 1000;
+
+	return RUNTIME_INFO_ERROR_NONE;
+}
+
+API int runtime_info_get_processor_type(char **cpuType)
+{
+	FILE *cpuinfo_fp;
+	char buf[256];
+	char result[256];
+	char *pBuf = NULL;
+	int written = 0;
+
+	if (!cpuType) {
+		_E("INVALID_PARAMETER(0x%08x) : invalid output parameter",
+				RUNTIME_INFO_ERROR_INVALID_PARAMETER);
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+	}
+
+	cpuinfo_fp = fopen("/proc/cpuinfo", "r");
+	if(cpuinfo_fp == NULL) {
+		_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	while(fgets(buf, sizeof(buf), cpuinfo_fp) != NULL) {
+		if(strncmp(buf, "model name", 10))
+			continue;
+
+		pBuf = strchr(buf, ':') + 2;
+
+		while((*pBuf != '\n') && (*pBuf != '\0') && (*pBuf != '@')) {
+			result[written] = *pBuf;
+			++pBuf;
+			++written;
+		}
+		result[written] = '\0';
+		break;
+	}
+
+	if(pBuf == NULL) {
+		_E("NOT_SUPPORTED(0x%08x) : there is no processor type information in this system",
+				RUNTIME_INFO_ERROR_NOT_SUPPORTED);
+		return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
+	}
+
+	*cpuType = (char*)malloc(sizeof(char) * written);
+	if (!(*cpuType)) {
+		_E("OUT_OF_MEMORY(0x%08x)", RUNTIME_INFO_ERROR_OUT_OF_MEMORY);
+		return RUNTIME_INFO_ERROR_OUT_OF_MEMORY;
+	}
+
+	strncpy(*cpuType, result, written);
+
+	return RUNTIME_INFO_ERROR_NONE;
+}
