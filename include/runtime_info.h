@@ -366,8 +366,56 @@ typedef struct {
 int runtime_info_get_process_cpu_usage(int *pid, int size, process_cpu_usage_s **usage);
 
 /**
- * @}
+ * @brief  Gets the number of processors
+ * @since_tizen  3.0
+ *
+ * @param[out]  num_core The number of whole processors
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
  */
+int runtime_info_get_processor_count(int *num_core);
+
+/**
+ * @brief  Gets the current frequency of processor
+ * @since_tizen  3.0
+ *
+ * @param[in]  core_num The number of CPU core that you want to know the frequency
+ * @param[out]  cpu_freq The current frequency(MHz) of processor
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ */
+int runtime_info_get_processor_current_frequency(int core_num, int *cpu_freq);
+
+/**
+ * @brief  Gets the max frequency of processor
+ * @since_tizen  3.0
+ *
+ * @param[in]  core_num The number of CPU core that you want to know the frequency
+ * @param[out]  cpu_freq The max frequency(MHz) of processor
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ */
+int runtime_info_get_processor_max_frequency(int core_num, int *cpu_freq);
+
+/**
+ * @brief  Gets the type of processor
+ * @since_tizen  3.0
+ * @remarks The @a cpu_type should be freed using free()
+ *
+ * @param[out]  cpu_type The type of processor
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_OUT_OF_MEMORY  Not able to allocate memory (for output parameter)
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ */
+int runtime_info_get_processor_type(char **cpu_type);
 
 #ifdef __cplusplus
 }
