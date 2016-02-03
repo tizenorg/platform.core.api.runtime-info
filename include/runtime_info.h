@@ -366,8 +366,42 @@ typedef struct {
 int runtime_info_get_process_cpu_usage(int *pid, int size, process_cpu_usage_s **usage);
 
 /**
- * @}
+ * @brief  Gets the number of processors
+ * @since_tizen  3.0
+ *
+ * @param[out]  num_core The number of whole processors
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
  */
+int runtime_info_get_processor_count(int *num_core);
+
+/**
+ * @brief  Gets the current frequency of processor
+ * @since_tizen  3.0
+ *
+ * @param[in]  core_idx The index (from 0) of CPU core that you want to know the frequency
+ * @param[out]  cpu_freq The current frequency(MHz) of processor
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ */
+int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq);
+
+/**
+ * @brief  Gets the max frequency of processor
+ * @since_tizen  3.0
+ *
+ * @param[in]  core_idx The index (from 0) of CPU core that you want to know the frequency
+ * @param[out]  cpu_freq The max frequency(MHz) of processor
+ *
+ * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
+ * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
+ * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ */
+int runtime_info_get_processor_max_frequency(int core_idx, int *cpu_freq);
 
 #ifdef __cplusplus
 }
