@@ -245,7 +245,7 @@ typedef struct {
 
 /**
  * @brief   Gets system memory information
- * @since_tizen 2.4
+ * @since_tizen @if WEARABLE 3.0 @else 2.4 @endif
  *
  * @param[out] info The system memory information structure
  *
@@ -262,7 +262,7 @@ int runtime_info_get_system_memory_info(runtime_memory_info_s *info);
 
 /**
  * @brief Structure for memory information per processes.
- * @since_tizen 2.4
+ * @since_tizen @if WEARABLE 3.0 @else 2.4 @endif
  */
 typedef struct {
 	int vsz;            /**< Virtual memory size (KiB) */
@@ -276,7 +276,7 @@ typedef struct {
 
 /**
  * @brief   Gets memory information per processes
- * @since_tizen 2.4
+ * @since_tizen @if WEARABLE 3.0 @else 2.4 @endif
  * @privlevel public
  * @privilege %http://tizen.org/privilege/systemmonitor
  *
@@ -303,7 +303,7 @@ int runtime_info_get_process_memory_info(int *pid, int size, process_memory_info
 
 /**
  * @brief Structure for cpu usage.
- * @since_tizen 2.4
+ * @since_tizen @if WEARABLE 3.0 @else 2.4 @endif
  */
 typedef struct {
 	double user;   /**< Time running un-niced user processes (Percent) */
@@ -314,7 +314,7 @@ typedef struct {
 
 /**
  * @brief   Gets cpu information
- * @since_tizen 2.4
+ * @since_tizen @if WEARABLE 3.0 @else 2.4 @endif
  *
  * @param[out] usage The cpu usage structure
  *
@@ -331,7 +331,7 @@ int runtime_info_get_cpu_usage(runtime_cpu_usage_s *usage);
 
 /**
  * @brief Structure for cpu usage per processes.
- * @since_tizen 2.4
+ * @since_tizen @if WEARABLE 3.0 @else 2.4 @endif
  */
 typedef struct {
 	int utime;    /**< Amount of time that this process has been scheduled in user mode (clock ticks) */
@@ -340,7 +340,7 @@ typedef struct {
 
 /**
  * @brief   Gets cpu usage per processes
- * @since_tizen 2.4
+ * @since_tizen @if WEARABLE 3.0 @else 2.4 @endif
  * @privlevel public
  * @privilege %http://tizen.org/privilege/systemmonitor
  *
