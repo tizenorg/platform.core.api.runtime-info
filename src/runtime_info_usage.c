@@ -410,11 +410,13 @@ API int runtime_info_get_processor_count(int *num_core)
 	if(!fscanf(cpuinfo_fp, "%d-%d", &buf, &result)) {
 		_E("IO_ERROR(0x%08x) : there is no information in the system file",
 				RUNTIME_INFO_ERROR_IO_ERROR);
+		fclose(cpuinfo_fp);
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 	}
 
 	*num_core = result + 1;
 
+	fclose(cpuinfo_fp);
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
@@ -460,11 +462,13 @@ API int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq
 	if(!fscanf(cpuinfo_fp, "%d", &result)) {
 		_E("IO_ERROR(0x%08x) : there is no information in the system file",
 				RUNTIME_INFO_ERROR_IO_ERROR);
+		fclose(cpuinfo_fp);
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 	}
 
 	*cpu_freq = result / 1000;
 
+	fclose(cpuinfo_fp);
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
@@ -510,10 +514,12 @@ API int runtime_info_get_processor_max_frequency(int core_idx, int *cpu_freq)
 	if(!fscanf(cpuinfo_fp, "%d", &result)) {
 		_E("IO_ERROR(0x%08x) : there is no information in the system file",
 				RUNTIME_INFO_ERROR_IO_ERROR);
+		fclose(cpuinfo_fp);
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 	}
 
 	*cpu_freq = result / 1000;
 
+	fclose(cpuinfo_fp);
 	return RUNTIME_INFO_ERROR_NONE;
 }
