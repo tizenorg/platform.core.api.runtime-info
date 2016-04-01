@@ -77,7 +77,7 @@ void runtime_info_bt_enabled_unset_event_cb(void);
 
 int runtime_info_wifi_hotspot_get_value(runtime_info_value_h);
 int runtime_info_wifi_hotspot_set_event_cb(void);
-void runtime_info_wifi_hotspot_unset_event_cb (void);
+void runtime_info_wifi_hotspot_unset_event_cb(void);
 
 int runtime_info_bt_hotspot_get_value(runtime_info_value_h);
 int runtime_info_bt_hotspot_set_event_cb(void);
@@ -143,7 +143,7 @@ int runtime_info_tvout_connected_get_value(runtime_info_value_h value);
 int runtime_info_tvout_connected_set_event_cb(void);
 void runtime_info_tvout_connected_unset_event_cb(void);
 
-int runtime_info_audio_jack_status_get_value (runtime_info_value_h value);
+int runtime_info_audio_jack_status_get_value(runtime_info_value_h value);
 int runtime_info_audio_jack_status_set_event_cb(void);
 void runtime_info_audio_jack_status_unset_event_cb(void);
 
