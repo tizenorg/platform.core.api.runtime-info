@@ -233,7 +233,7 @@ int runtime_info_unset_changed_cb(runtime_info_key_e key);
 
 /**
  * @brief Structure for memory information.
- * @since_tizen 2.4
+ * @since_tizen @if WEARABLE 3.0 @else 2.4 @endif
  */
 typedef struct {
 	int total;  /**< Total memory (KiB) */
