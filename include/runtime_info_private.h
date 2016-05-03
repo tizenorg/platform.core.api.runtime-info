@@ -29,6 +29,15 @@ extern "C"
 #define API __attribute__ ((visibility("default")))
 #endif
 
+#ifdef LOG_TAG
+#undef LOG_TAG
+#endif
+#define LOG_TAG "CAPI_SYSTEM_RUNTIME_INFO"
+
+#define _E(fmt, arg...) LOGE("[%s,%d] "fmt, __FUNCTION__, __LINE__, ##arg)
+#define _D(fmt, arg...) LOGD("[%s,%d] "fmt, __FUNCTION__, __LINE__, ##arg)
+#define _I(fmt, arg...) LOGI("[%s,%d] "fmt, __FUNCTION__, __LINE__, ##arg)
+
 typedef enum {
 	RUNTIME_INFO_DATA_TYPE_STRING,
 	RUNTIME_INFO_DATA_TYPE_INT,
@@ -166,6 +175,9 @@ void runtime_info_vibration_level_haptic_feedback_unset_event_cb(void);
 int runtime_info_auto_rotation_enabled_get_value(runtime_info_value_h);
 int runtime_info_auto_rotation_enabled_set_event_cb(void);
 void runtime_info_auto_rotation_enabled_unset_event_cb(void);
+
+int runtime_info_get_frequency_cpufreq(int core_idx, char *type, int *cpu_freq);
+int runtime_info_get_frequency_cpuinfo(int core_idx, int *cpu_freq);
 
 #ifdef __cplusplus
 }

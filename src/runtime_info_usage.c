@@ -25,15 +25,6 @@
 
 #include <E_DBus.h>
 
-#ifdef LOG_TAG
-#undef LOG_TAG
-#endif
-#define LOG_TAG "CAPI_RUNTIME_INFO_USAGE"
-
-#define _E(fmt, arg...) LOGE("[%s,%d] "fmt, __FUNCTION__, __LINE__, ##arg)
-#define _D(fmt, arg...) LOGD("[%s,%d] "fmt, __FUNCTION__, __LINE__, ##arg)
-#define _I(fmt, arg...) LOGI("[%s,%d] "fmt, __FUNCTION__, __LINE__, ##arg)
-
 #define RESOURCED_BUS_NAME "org.tizen.resourced"
 #define RESOURCED_USAGE_OBJECT_NAME "/Org/Tizen/ResourceD/Process"
 #define RESOURCED_USAGE_INTERFACE_NAME "org.tizen.resourced.process"
@@ -423,11 +414,9 @@ API int runtime_info_get_processor_count(int *num_core)
 API int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq)
 {
 	int num_core;
-	char path[256];
-	FILE *cpuinfo_fp;
-	int result;
 
-	if (runtime_info_get_processor_count(&num_core)) {
+	if (runtime_info_get_processor_count(&num_core)
+			!= RUNTIME_INFO_ERROR_NONE) {
 		_E("runtime_info_get_processor_count is failed");
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 	}
@@ -444,42 +433,32 @@ API int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq
 		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
 	}
 
-	snprintf(path, sizeof(path), "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_cur_freq",
-			core_idx);
-	cpuinfo_fp = fopen(path, "r");
-	if (cpuinfo_fp == NULL) {
-		_I("Fail to get the information about core%d. Get the core0's instead.",
-				core_idx);
+	if (runtime_info_get_frequency_cpufreq(core_idx, "cur", cpu_freq)
+			!= RUNTIME_INFO_ERROR_NONE) {
+		_I("This system doesn't support cpufreq. Use cpuinfo instead.");
 
-		cpuinfo_fp = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r");
-		if (cpuinfo_fp == NULL) {
-			_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
-					RUNTIME_INFO_ERROR_IO_ERROR);
+		switch (runtime_info_get_frequency_cpuinfo(core_idx, cpu_freq)) {
+		case RUNTIME_INFO_ERROR_NONE:
+			_I("Notice : it is max CPU frequency");
+			break;
+		case RUNTIME_INFO_ERROR_NOT_SUPPORTED:
+			_E("This system doesn't support MHz information in the cpuinfo");
+			return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
+		default:
+			_E("Fail to get current CPU frequency");
 			return RUNTIME_INFO_ERROR_IO_ERROR;
-		}
+		};
 	}
 
-	if (!fscanf(cpuinfo_fp, "%d", &result)) {
-		_E("IO_ERROR(0x%08x) : there is no information in the system file",
-				RUNTIME_INFO_ERROR_IO_ERROR);
-		fclose(cpuinfo_fp);
-		return RUNTIME_INFO_ERROR_IO_ERROR;
-	}
-
-	*cpu_freq = result / 1000;
-
-	fclose(cpuinfo_fp);
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
 API int runtime_info_get_processor_max_frequency(int core_idx, int *cpu_freq)
 {
 	int num_core;
-	char path[256];
-	FILE *cpuinfo_fp;
-	int result;
 
-	if (runtime_info_get_processor_count(&num_core)) {
+	if (runtime_info_get_processor_count(&num_core)
+			!= RUNTIME_INFO_ERROR_NONE) {
 		_E("runtime_info_get_processor_count is failed");
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 	}
@@ -496,30 +475,21 @@ API int runtime_info_get_processor_max_frequency(int core_idx, int *cpu_freq)
 		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
 	}
 
-	snprintf(path, sizeof(path), "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_max_freq",
-			core_idx);
-	cpuinfo_fp = fopen(path, "r");
-	if (cpuinfo_fp == NULL) {
-		_I("Fail to get the information about core%d. Get the core0's instead.",
-				core_idx);
+	if (runtime_info_get_frequency_cpufreq(core_idx, "max", cpu_freq)
+			!= RUNTIME_INFO_ERROR_NONE) {
+		_I("This system doesn't support cpufreq. Use cpuinfo instead.");
 
-		cpuinfo_fp = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq", "r");
-		if (cpuinfo_fp == NULL) {
-			_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
-					RUNTIME_INFO_ERROR_IO_ERROR);
+		switch (runtime_info_get_frequency_cpuinfo(core_idx, cpu_freq)) {
+		case RUNTIME_INFO_ERROR_NONE:
+			break;
+		case RUNTIME_INFO_ERROR_NOT_SUPPORTED:
+			_E("This system doesn't support MHz information in the cpuinfo");
+			return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
+		default:
+			_E("Fail to get current CPU frequency");
 			return RUNTIME_INFO_ERROR_IO_ERROR;
-		}
+		};
 	}
 
-	if (!fscanf(cpuinfo_fp, "%d", &result)) {
-		_E("IO_ERROR(0x%08x) : there is no information in the system file",
-				RUNTIME_INFO_ERROR_IO_ERROR);
-		fclose(cpuinfo_fp);
-		return RUNTIME_INFO_ERROR_IO_ERROR;
-	}
-
-	*cpu_freq = result / 1000;
-
-	fclose(cpuinfo_fp);
 	return RUNTIME_INFO_ERROR_NONE;
 }

@@ -24,12 +24,6 @@
 #include <runtime_info.h>
 #include <runtime_info_private.h>
 
-#ifdef LOG_TAG
-#undef LOG_TAG
-#endif
-
-#define LOG_TAG "CAPI_SYSTEM_RUNTIME_INFO"
-
 static const char *VCONF_AUDIO_JACK = VCONFKEY_SYSMAN_EARJACK;
 static const char *VCONF_VIBRATION_ENABLED = VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL;
 static const char *VCONF_ROTATION_LOCK_ENABLED = VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL;
@@ -281,4 +275,89 @@ int runtime_info_charger_connected_set_event_cb(void)
 void runtime_info_charger_connected_unset_event_cb(void)
 {
 	runtime_info_vconf_unset_event_cb(VCONF_CHARGER_CONNECTED, 0);
+}
+
+int runtime_info_get_frequency_cpufreq(int core_idx, char *type, int *cpu_freq)
+{
+	char path[256];
+	FILE *cpufreq_fp;
+	int result;
+
+	if (core_idx < 0)
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+
+	if (!type || !cpu_freq)
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+
+	snprintf(path, sizeof(path), "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_%s_freq",
+			core_idx, type);
+	cpufreq_fp = fopen(path, "r");
+	if (cpufreq_fp == NULL) {
+		if (core_idx > 0) {
+			_I("Fail to get the information about core%d. Get the core0's instead",
+					core_idx);
+			snprintf(path, sizeof(path), "/sys/devices/system/cpu/cpu0/cpufreq/scaling_%s_freq",
+					type);
+			cpufreq_fp = fopen(path, "r");
+		}
+
+		if (cpufreq_fp == NULL) {
+			_E("IO_ERROR(0x%08x) : failed to open cpufreq file",
+					RUNTIME_INFO_ERROR_IO_ERROR);
+			return RUNTIME_INFO_ERROR_IO_ERROR;
+		}
+	}
+
+	if (!fscanf(cpufreq_fp, "%d", &result)) {
+		_E("IO_ERROR(0x%08x) : there is no information in the cpuinfo file",
+				RUNTIME_INFO_ERROR_IO_ERROR);
+		fclose(cpufreq_fp);
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	*cpu_freq = result / 1000;
+	fclose(cpufreq_fp);
+	return RUNTIME_INFO_ERROR_NONE;
+}
+
+int runtime_info_get_frequency_cpuinfo(int core_idx, int *cpu_freq)
+{
+	FILE *cpuinfo_fp;
+	char line[128];
+	int cur_core = 0;
+	char *start;
+	int acc_freq;
+
+	if (core_idx < 0)
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+
+	if (!cpu_freq)
+		return RUNTIME_INFO_ERROR_INVALID_PARAMETER;
+
+	cpuinfo_fp = fopen("/proc/cpuinfo", "r");
+	if (cpuinfo_fp == NULL) {
+		_E("Fail to open cpuinfo");
+		return RUNTIME_INFO_ERROR_IO_ERROR;
+	}
+
+	while (fgets(line, sizeof(line), cpuinfo_fp) != NULL) {
+		if (strncmp(line, "cpu MHz", 7))
+			continue;
+
+		if (cur_core == core_idx) {
+			/* String format in the cpuinfo : "cpu MHz : 1234" */
+			start = strchr(line, ':') + 2;
+			acc_freq = 0;
+			while (*start >= '0' && *start <= '9') {
+				acc_freq = (acc_freq * 10) + (*start - '0');
+				++start;
+			}
+
+			*cpu_freq = acc_freq;
+			return RUNTIME_INFO_ERROR_NONE;
+		}
+		++cur_core;
+	}
+
+	return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
 }
