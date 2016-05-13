@@ -354,10 +354,12 @@ int runtime_info_get_frequency_cpuinfo(int core_idx, int *cpu_freq)
 			}
 
 			*cpu_freq = acc_freq;
+			fclose(cpuinfo_fp);
 			return RUNTIME_INFO_ERROR_NONE;
 		}
 		++cur_core;
 	}
 
+	fclose(cpuinfo_fp);
 	return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
 }
