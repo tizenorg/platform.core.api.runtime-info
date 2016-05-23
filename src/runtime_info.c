@@ -414,6 +414,7 @@ API int runtime_info_unset_changed_cb(runtime_info_key_e key)
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
+//LCOV_EXCL_START
 void runtime_info_updated(runtime_info_key_e key)
 {
 	runtime_info_item_h runtime_info_item;
@@ -457,3 +458,4 @@ void runtime_info_updated(runtime_info_key_e key)
 		runtime_info_item->event_subscription->changed_cb(key, runtime_info_item->event_subscription->user_data);
 	}
 }
+//LCOV_EXCL_STOP

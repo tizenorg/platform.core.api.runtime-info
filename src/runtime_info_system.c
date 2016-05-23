@@ -292,6 +292,8 @@ int runtime_info_get_frequency_cpufreq(int core_idx, char *type, int *cpu_freq)
 	snprintf(path, sizeof(path), "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_%s_freq",
 			core_idx, type);
 	cpufreq_fp = fopen(path, "r");
+
+	//LCOV_EXCL_START
 	if (cpufreq_fp == NULL) {
 		if (core_idx > 0) {
 			_I("Fail to get the information about core%d. Get the core0's instead",
@@ -314,12 +316,14 @@ int runtime_info_get_frequency_cpufreq(int core_idx, char *type, int *cpu_freq)
 		fclose(cpufreq_fp);
 		return RUNTIME_INFO_ERROR_IO_ERROR;
 	}
+	//LCOV_EXCL_STOP
 
 	*cpu_freq = result / 1000;
 	fclose(cpufreq_fp);
 	return RUNTIME_INFO_ERROR_NONE;
 }
 
+//LCOV_EXCL_START
 int runtime_info_get_frequency_cpuinfo(int core_idx, int *cpu_freq)
 {
 	FILE *cpuinfo_fp;
@@ -363,3 +367,4 @@ int runtime_info_get_frequency_cpuinfo(int core_idx, int *cpu_freq)
 	fclose(cpuinfo_fp);
 	return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
 }
+//LCOV_EXCL_STOP
