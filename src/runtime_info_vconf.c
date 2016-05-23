@@ -57,6 +57,7 @@ int runtime_info_vconf_get_value_bool(const char *vconf_key, int *value)
 	return ret;
 }
 
+//LCOV_EXCL_START : not used function
 int runtime_info_vconf_get_value_double(const char *vconf_key, double *value)
 {
 	int ret = vconf_get_dbl(vconf_key, value);
@@ -79,7 +80,9 @@ int runtime_info_vconf_get_value_string(const char *vconf_key, char **value)
 	*value = str_value;
 	return RUNTIME_INFO_ERROR_NONE;
 }
+//LCOV_EXCL_STOP
 
+//LCOV_EXCL_START : not called callback
 typedef void (*runtime_info_vconf_event_cb)(keynode_t *node, void *event_data);
 
 static void runtime_info_vconf_event_cb0(keynode_t *node, void *event_data)
@@ -134,6 +137,7 @@ static runtime_info_vconf_event_cb runtime_info_vconf_get_event_cb_slot(int slot
 		return NULL;
 	}
 }
+//LCOV_EXCL_STOP
 
 int runtime_info_vconf_set_event_cb(const char *vconf_key, runtime_info_key_e runtime_info_key, int slot)
 {
