@@ -36,6 +36,7 @@
 
 #define kBtoKiB(val) (int)(((long long)val * 1024)/1000)
 
+//LCOV_EXCL_START : system error
 static int runtime_info_get_dbus_error(const char *err_name)
 {
 	int size;
@@ -53,6 +54,7 @@ static int runtime_info_get_dbus_error(const char *err_name)
 	else
 		return RUNTIME_INFO_ERROR_REMOTE_IO;
 }
+//LCOV_EXCL_STOP
 
 /* Handler function which handles dbus related instructions
  * for both per process memory and cpu requests.
@@ -68,18 +70,22 @@ static DBusMessage *runtime_info_dbus_process_usage_info(int *pid, int size, int
 	int ret;
 
 	if (!pid || !error) {
+		//LCOV_EXCL_START : system error
 		_E("INVALID_PARAMETER(0x%08x): pid list and error params cannot be null");
 
 		if (error)
 			*error = RUNTIME_INFO_ERROR_INVALID_PARAMETER;
 		return NULL;
+		//LCOV_EXCL_STOP
 	}
 
 	conn = dbus_bus_get(DBUS_BUS_SYSTEM, NULL);
 	if (!conn) {
+		//LCOV_EXCL_START : system error
 		_E("DBUS_CONNECTION_ERROR");
 		*error = RUNTIME_INFO_ERROR_REMOTE_IO;
 		return NULL;
+		//LCOV_EXCL_STOP
 	}
 
 	if (info == MEMORY_USAGE) {
@@ -114,10 +120,12 @@ static DBusMessage *runtime_info_dbus_process_usage_info(int *pid, int size, int
 	ret = dbus_message_append_args(msg, DBUS_TYPE_ARRAY, DBUS_TYPE_INT32, &pid,
 			size, DBUS_TYPE_INVALID);
 	if (!ret) {
+		//LCOV_EXCL_START : system error
 		_E("DBUS_METHOD_CALL: not able to append pid array to message");
 		*error = RUNTIME_INFO_ERROR_IO_ERROR;
 		dbus_message_unref(msg);
 		return NULL;
+		//LCOV_EXCL_STOP
 	}
 
 	dbus_error_init(&err);
@@ -132,13 +140,15 @@ static DBusMessage *runtime_info_dbus_process_usage_info(int *pid, int size, int
 	reply = dbus_connection_send_with_reply_and_block(conn, msg,
 			DBUS_REPLY_TIMEOUT, &err);
 	if (!reply)
-		_E("DBUS_METHOD_CALL: not able to send message");
+		_E("DBUS_METHOD_CALL: not able to send message");	//LCOV_EXCL_LINE : system error
 
 	if (dbus_error_is_set(&err)) {
+		//LCOV_EXCL_START : system error
 		_E("DBUS_METHOD_CALL: dbus_connection_send error(%s:%s)", err.name, err.message);
 		*error = runtime_info_get_dbus_error(err.name);
 		dbus_error_free(&err);
 		reply = NULL;
+		//LCOV_EXCL_STOP
 	}
 
 	dbus_message_unref(msg);
@@ -211,22 +221,28 @@ API int runtime_info_get_process_memory_info(int *pid, int size, process_memory_
 	/* Get the needed information from resourced daemon using dbus */
 	replymsg = runtime_info_dbus_process_usage_info(pid, size, MEMORY_USAGE, &error);
 	if (!replymsg) {
+		//LCOV_EXCL_START : system error
 		_E("DBUS_METHOD_CALL: call to resourced not successful");
 		return error;
+		//LCOV_EXCL_STOP
 	}
 
 	/* Check if the message is an error message or not in expected
 	 * format and return error value */
 	dbus_message_iter_init(replymsg, &iter);
 	if (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_INT32) {
+		//LCOV_EXCL_START : system error
 		dbus_message_iter_get_basic(&iter, &error);
 		_E("DBUS_METHOD_CALL: call to resourced returned error message");
 		dbus_message_unref(replymsg);
 		return error;
+		//LCOV_EXCL_STOP
 	} else if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_ARRAY) {
+		//LCOV_EXCL_START : system error
 		_E("DBUS_METHOD_CALL: received dbus message is not in expected format");
 		dbus_message_unref(replymsg);
 		return RUNTIME_INFO_ERROR_REMOTE_IO;
+		//LCOV_EXCL_STOP
 	}
 
 	/* Populate the entries of info array using the data received from resourced */
@@ -333,31 +349,40 @@ API int runtime_info_get_process_cpu_usage(int *pid, int size, process_cpu_usage
 
 	/* Get the needed information from resourced daemon using dbus */
 	replymsg = runtime_info_dbus_process_usage_info(pid, size, CPU_USAGE, &error);
+
 	if (!replymsg) {
+		//LCOV_EXCL_START : system error
 		_E("DBUS_METHOD_CALL: call to resourced not successful");
 		return error;
+		//LCOV_EXCL_STOP
 	}
 
 	/* Check if the message is an error message or not in expected format
 	 * and return error value */
 	dbus_message_iter_init(replymsg, &iter);
 	if (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_INT32) {
+		//LCOV_EXCL_START : system error
 		dbus_message_iter_get_basic(&iter, &error);
 		_E("DBUS_METHOD_CALL: call to resourced returned error message");
 		dbus_message_unref(replymsg);
 		return error;
+		//LCOV_EXCL_STOP
 	} else if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_ARRAY) {
+		//LCOV_EXCL_START : system error
 		_E("DBUS_METHOD_CALL: received dbus message is not in expected format");
 		dbus_message_unref(replymsg);
 		return RUNTIME_INFO_ERROR_REMOTE_IO;
+		//LCOV_EXCL_STOP
 	}
 
 	/* Populate the entries of info array using the data received from resourced */
 	*usage = (process_cpu_usage_s *)malloc(size * sizeof(process_cpu_usage_s));
 	if (!(*usage)) {
+		//LCOV_EXCL_START : system error
 		_E("OUT_OF_MEMORY(0x%08x)", RUNTIME_INFO_ERROR_OUT_OF_MEMORY);
 		dbus_message_unref(replymsg);
 		return RUNTIME_INFO_ERROR_OUT_OF_MEMORY;
+		//LCOV_EXCL_STOP
 	}
 
 	dbus_message_iter_recurse(&iter, &iter_array);
@@ -393,16 +418,20 @@ API int runtime_info_get_processor_count(int *num_core)
 
 	cpuinfo_fp = fopen("/sys/devices/system/cpu/possible", "r");
 	if (cpuinfo_fp == NULL) {
+		//LCOV_EXCL_START : system error
 		_E("IO_ERROR(0x%08x) : failed to open file to read cpu information",
 				RUNTIME_INFO_ERROR_IO_ERROR);
 		return RUNTIME_INFO_ERROR_IO_ERROR;
+		//LCOV_EXCL_STOP
 	}
 
 	if (!fscanf(cpuinfo_fp, "%d-%d", &buf, &result)) {
+		//LCOV_EXCL_START : system error
 		_E("IO_ERROR(0x%08x) : there is no information in the system file",
 				RUNTIME_INFO_ERROR_IO_ERROR);
 		fclose(cpuinfo_fp);
 		return RUNTIME_INFO_ERROR_IO_ERROR;
+		//LCOV_EXCL_STOP
 	}
 
 	*num_core = result + 1;
@@ -435,6 +464,7 @@ API int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq
 
 	if (runtime_info_get_frequency_cpufreq(core_idx, "cur", cpu_freq)
 			!= RUNTIME_INFO_ERROR_NONE) {
+		//LCOV_EXCL_START : system error
 		_I("This system doesn't support cpufreq. Use cpuinfo instead.");
 
 		switch (runtime_info_get_frequency_cpuinfo(core_idx, cpu_freq)) {
@@ -448,6 +478,7 @@ API int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq
 			_E("Fail to get current CPU frequency");
 			return RUNTIME_INFO_ERROR_IO_ERROR;
 		};
+		//LCOV_EXCL_STOP
 	}
 
 	return RUNTIME_INFO_ERROR_NONE;
@@ -477,6 +508,7 @@ API int runtime_info_get_processor_max_frequency(int core_idx, int *cpu_freq)
 
 	if (runtime_info_get_frequency_cpufreq(core_idx, "max", cpu_freq)
 			!= RUNTIME_INFO_ERROR_NONE) {
+		//LCOV_EXCL_START : system error
 		_I("This system doesn't support cpufreq. Use cpuinfo instead.");
 
 		switch (runtime_info_get_frequency_cpuinfo(core_idx, cpu_freq)) {
@@ -489,6 +521,7 @@ API int runtime_info_get_processor_max_frequency(int core_idx, int *cpu_freq)
 			_E("Fail to get current CPU frequency");
 			return RUNTIME_INFO_ERROR_IO_ERROR;
 		};
+		//LCOV_EXCL_STOP
 	}
 
 	return RUNTIME_INFO_ERROR_NONE;
