@@ -31,6 +31,7 @@ extern "C"
 
 /**
  * @brief Enumeration for error codes for runtime information.
+ * @since_tizen 2.3
  */
 typedef enum {
 	RUNTIME_INFO_ERROR_NONE = TIZEN_ERROR_NONE,				/**< Successful */
@@ -39,11 +40,12 @@ typedef enum {
 	RUNTIME_INFO_ERROR_IO_ERROR = TIZEN_ERROR_IO_ERROR,			/**< An input/output error occurred when read value from system */
 	RUNTIME_INFO_ERROR_REMOTE_IO = TIZEN_ERROR_REMOTE_IO,			/**< Remote I/O error occured */
 	RUNTIME_INFO_ERROR_PERMISSION_DENIED = TIZEN_ERROR_PERMISSION_DENIED,	/**< No permission to use the api */
-	RUNTIME_INFO_ERROR_NOT_SUPPORTED = TIZEN_ERROR_NOT_SUPPORTED,			/**< Not supported parameter @if MOBILE (Since 2.3.1) @endif */
+	RUNTIME_INFO_ERROR_NOT_SUPPORTED = TIZEN_ERROR_NOT_SUPPORTED,			/**< Not supported parameter @if MOBILE (Since 2.3.1) @elseif WEARABLE (Since 2.3.2) @endif */
 } runtime_info_error_e;
 
 /**
  * @brief Enumeration for keys for runtime information..
+ * @since_tizen 2.3
  */
 typedef enum {
 	RUNTIME_INFO_KEY_BLUETOOTH_ENABLED					= 2,	/**<Indicates whether Bluetooth is enabled. */
@@ -68,6 +70,7 @@ typedef enum {
 
 /**
  * @brief Enumeration for Wi-Fi status.
+ * @since_tizen 2.3
  */
 typedef enum {
 	RUNTIME_INFO_WIFI_STATUS_DISABLED,				/**< GPS is disabled. */
@@ -77,6 +80,7 @@ typedef enum {
 
 /**
  * @brief Enumeration for GPS status.
+ * @since_tizen 2.3
  */
 typedef enum {
 	RUNTIME_INFO_GPS_STATUS_DISABLED,				/**< GPS is disabled. */
@@ -86,6 +90,7 @@ typedef enum {
 
 /**
  * @brief Enumeration for audio jack status.
+ * @since_tizen 2.3
  */
 typedef enum {
 	RUNTIME_INFO_AUDIO_JACK_STATUS_UNCONNECTED,		/**< Audio jack is not connected */
@@ -124,7 +129,7 @@ typedef void (*runtime_info_changed_cb)(runtime_info_key_e key, void *user_data)
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An input/output error occurred when read value from system
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
- * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @endif
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @elseif WEARABLE (Since 2.3.2) @endif
  */
 int runtime_info_get_value_int(runtime_info_key_e key, int *value);
 
@@ -144,7 +149,7 @@ int runtime_info_get_value_int(runtime_info_key_e key, int *value);
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An input/output error occurred when read value from system
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
- * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @endif
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @elseif WEARABLE (Since 2.3.2) @endif
  */
 int runtime_info_get_value_bool(runtime_info_key_e key, bool *value);
 
@@ -164,7 +169,7 @@ int runtime_info_get_value_bool(runtime_info_key_e key, bool *value);
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An input/output error occurred when read value from system
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
- * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @endif
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @elseif WEARABLE (Since 2.3.2) @endif
  */
 int runtime_info_get_value_double(runtime_info_key_e key, double *value);
 
@@ -187,7 +192,7 @@ int runtime_info_get_value_double(runtime_info_key_e key, double *value);
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR          An input/output error occurred when read value from system
  * @retval  #RUNTIME_INFO_ERROR_OUT_OF_MEMORY     Out of memory
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
- * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @endif
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @elseif WEARABLE (Since 2.3.2) @endif
  */
 int runtime_info_get_value_string(runtime_info_key_e key, char **value);
 
@@ -206,7 +211,7 @@ int runtime_info_get_value_string(runtime_info_key_e key, char **value);
  * @retval  #RUNTIME_INFO_ERROR_NONE              Successful
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_PERMISSION_DENIED No permission to use the api
- * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @endif
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED     Not supported parameter @if MOBILE (Since 2.3.1) @elseif WEARABLE (Since 2.3.2) @endif
  * @post runtime_info_changed_cb() will be invoked.
  *
  * @see runtime_info_unset_changed_cb()
@@ -387,6 +392,7 @@ int runtime_info_get_processor_count(int *num_core);
  * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED  Not supported CPU frequency information
  */
 int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq);
 
@@ -400,6 +406,7 @@ int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq);
  * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED  Not supported CPU frequency information
  */
 int runtime_info_get_processor_max_frequency(int core_idx, int *cpu_freq);
 
