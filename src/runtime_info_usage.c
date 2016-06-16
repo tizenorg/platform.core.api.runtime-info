@@ -471,9 +471,9 @@ API int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq
 		case RUNTIME_INFO_ERROR_NONE:
 			_I("Notice : it is max CPU frequency");
 			break;
-		case RUNTIME_INFO_ERROR_NOT_SUPPORTED:
+		case RUNTIME_INFO_ERROR_NO_DATA:
 			_E("This system doesn't support MHz information in the cpuinfo");
-			return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
+			return RUNTIME_INFO_ERROR_NO_DATA;
 		default:
 			_E("Fail to get current CPU frequency");
 			return RUNTIME_INFO_ERROR_IO_ERROR;
@@ -514,9 +514,9 @@ API int runtime_info_get_processor_max_frequency(int core_idx, int *cpu_freq)
 		switch (runtime_info_get_frequency_cpuinfo(core_idx, cpu_freq)) {
 		case RUNTIME_INFO_ERROR_NONE:
 			break;
-		case RUNTIME_INFO_ERROR_NOT_SUPPORTED:
+		case RUNTIME_INFO_ERROR_NO_DATA:
 			_E("This system doesn't support MHz information in the cpuinfo");
-			return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
+			return RUNTIME_INFO_ERROR_NO_DATA;
 		default:
 			_E("Fail to get current CPU frequency");
 			return RUNTIME_INFO_ERROR_IO_ERROR;
