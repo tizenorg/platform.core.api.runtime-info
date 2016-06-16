@@ -367,6 +367,6 @@ int runtime_info_get_frequency_cpuinfo(int core_idx, int *cpu_freq)
 	}
 
 	fclose(cpuinfo_fp);
-	return RUNTIME_INFO_ERROR_NOT_SUPPORTED;
+	return RUNTIME_INFO_ERROR_NO_DATA;
 }
 //LCOV_EXCL_STOP
