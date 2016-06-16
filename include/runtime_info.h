@@ -387,6 +387,7 @@ int runtime_info_get_processor_count(int *num_core);
  * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED  Not supported CPU frequency information
  */
 int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq);
 
@@ -400,6 +401,7 @@ int runtime_info_get_processor_current_frequency(int core_idx, int *cpu_freq);
  * @retval  #RUNTIME_INFO_ERROR_NONE  Successful
  * @retval  #RUNTIME_INFO_ERROR_INVALID_PARAMETER  Invalid parameter
  * @retval  #RUNTIME_INFO_ERROR_IO_ERROR  An I/O error occurred (during file open operation)
+ * @retval  #RUNTIME_INFO_ERROR_NOT_SUPPORTED  Not supported CPU frequency information
  */
 int runtime_info_get_processor_max_frequency(int core_idx, int *cpu_freq);
 
